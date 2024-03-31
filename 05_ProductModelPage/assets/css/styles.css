@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+body {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    margin: 0;
+    padding: 0;
+   
+    background-image: url(../../../resources/images/2151065718.jpg)   
+}
+
+header {
+    background-color: #333; /* Cor de fundo do header */
+    color: #fff; /* Cor do texto do header */
+    padding: 20px; /* Espaçamento interno do header */
+    text-align: center; /* Alinhamento do texto no centro */
+    position: relative; /* Garante que a posição do banner seja relativa ao header */
+    height: 500px;
+}
+#banner-image {
+    width: 100%; /* A imagem ocupa toda a largura do header */
+    height: 100%; /* A imagem ocupa toda a altura do header */
+    object-fit: cover; /* Garante que a imagem cubra todo o espaço do elemento mantendo a proporção */
+    position: absolute; /* Ajusta a posição da imagem em relação ao header */
+    top: 0; /* Posiciona a imagem no topo do header */
+    left: 0; /* Posiciona a imagem à esquerda do header */
+}
+
+
+nav {
+    position:absolute; /* Define a posição do menu */
+    bottom: 0; /* Alinha o menu no topo do cabeçalho */
+    left: 0; /* Alinha o menu à esquerda do cabeçalho */
+    width: 100%; /* Ocupa toda a largura do cabeçalho */
+    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo do menu (com transparência) */
+    padding: 20px; /* Espaçamento interno do menu */
+    box-sizing: border-box; /* Inclui padding na largura total do elemento */
+}
+
+nav ul {
+    list-style-type: none; /* Remove marcadores de lista */
+    padding: 0; /* Remove o preenchimento padrão */
+}
+
+nav ul li {
+    display: inline; /* Exibe os itens da lista em linha */
+    margin-right: 20px; /* Espaçamento entre os itens da lista */
+    font-size: large;
+
+}
+
+nav ul li a {
+    color: #fff; /* Cor dos links do menu */
+    text-decoration: none; /* Remove sublinhado dos links */
+    transition: color 0.3s ease; /* Transição suave para mudança de cor */
+}
+
+nav ul li a:hover {
+    color: #ff0707; /* Cor dos links do menu ao passar o mouse */
+    
+}
+
+.main-content {
+    height: 250vh;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    margin: auto -17px; /*auto for top-bottom -17px for right-left*/
+    padding: 10px 0; /*10px for top-bottom, 0 for right-left*/
+    position: static;
+    bottom: 0;
+    width: 100vw;
+}
