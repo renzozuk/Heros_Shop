@@ -28,7 +28,6 @@ header {
     left: 0; /* Posiciona a imagem à esquerda do header */
 }
 
-
 nav {
     position:absolute; /* Define a posição do menu */
     bottom: 0; /* Alinha o menu no topo do cabeçalho */
