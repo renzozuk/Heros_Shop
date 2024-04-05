@@ -7,8 +7,7 @@ body {
     font-style: normal;
     margin: 0;
     padding: 0;
-   
-    background-image: url(../../../resources/images/2151065718.jpg)   
+    background-image: url(../../../resources/images/2151065718_mirror.png);   
 }
 
 header {
@@ -33,9 +32,12 @@ nav {
     bottom: 0; /* Alinha o menu no topo do cabeçalho */
     left: 0; /* Alinha o menu à esquerda do cabeçalho */
     width: 100%; /* Ocupa toda a largura do cabeçalho */
-    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo do menu (com transparência) */
+    background-color: rgba(3, 0, 23, 0.95); /* Cor de fundo do menu (com transparência) */
     padding: 20px; /* Espaçamento interno do menu */
     box-sizing: border-box; /* Inclui padding na largura total do elemento */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 nav ul {
@@ -57,7 +59,7 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-    color: #ff0707; /* Cor dos links do menu ao passar o mouse */
+    color: #ff2d00; /* Cor dos links do menu ao passar o mouse */
     
 }
 
