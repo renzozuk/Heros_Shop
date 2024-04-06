@@ -86,6 +86,11 @@ h2 {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+.small_container{
+    width: min-content;
+    height: min-content;
+}
+
 .input-box {
     width: 82.5vw;
     margin: 0 auto 2.5vh;
@@ -116,6 +121,10 @@ h2 {
     height: 10vh;
     margin: 0 5%;
     resize: none;
+}
+
+.input-box-small {
+    width: 200px;
 }
 
 .submit-button {

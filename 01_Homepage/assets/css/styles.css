@@ -176,3 +176,10 @@ footer {
     bottom: 0;
     width: 100vw;
 }
+
+
+.vertical-bar {
+    border-left: 1px solid #ffffff;
+    height: 20px;
+    margin-right: 20px;
+}
