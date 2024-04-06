@@ -64,7 +64,9 @@ nav ul li a:hover {
 }
 
 h2 {
+    margin: 2vh auto 5vh;
     font-size: 36px;
+    text-align: center;
     color: whitesmoke;
     margin-bottom: 20px;
 }
@@ -173,7 +175,7 @@ h2 {
     }
 
     .comments .comment img {
-        max-width: 62.5px;
+        max-width: 63px;
         max-height: 62.5px;
         margin: 1.75% 1% 1% 1%;
     }

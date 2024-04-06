@@ -63,7 +63,9 @@ nav ul li a:hover {
 }
 
 h2 {
+    margin: 2vh auto 0;
     font-size: 36px;
+    text-align: center;
     color: whitesmoke;
     margin-bottom: 20px;
 }

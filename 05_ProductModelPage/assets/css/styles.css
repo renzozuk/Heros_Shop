@@ -79,7 +79,9 @@ footer {
 }
 
 h2 {
+    margin: 2vh auto 5vh;
     font-size: 36px;
+    text-align: center;
     color: whitesmoke;
     margin-bottom: 20px;
 }
