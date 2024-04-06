@@ -11,55 +11,55 @@ body {
 }
 
 header {
-    background-color: #333; /* Cor de fundo do header */
-    color: #fff; /* Cor do texto do header */
-    padding: 20px; /* Espaçamento interno do header */
-    text-align: center; /* Alinhamento do texto no centro */
-    position: relative; /* Garante que a posição do banner seja relativa ao header */
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    position: relative;
     height: 500px;
 }
 #banner-image {
-    width: 100%; /* A imagem ocupa toda a largura do header */
-    height: 100%; /* A imagem ocupa toda a altura do header */
-    object-fit: cover; /* Garante que a imagem cubra todo o espaço do elemento mantendo a proporção */
-    position: absolute; /* Ajusta a posição da imagem em relação ao header */
-    top: 0; /* Posiciona a imagem no topo do header */
-    left: 0; /* Posiciona a imagem à esquerda do header */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 nav {
-    position:absolute; /* Define a posição do menu */
-    bottom: 0; /* Alinha o menu no topo do cabeçalho */
-    left: 0; /* Alinha o menu à esquerda do cabeçalho */
-    width: 100%; /* Ocupa toda a largura do cabeçalho */
-    background-color: rgba(3, 0, 23, 0.95); /* Cor de fundo do menu (com transparência) */
-    padding: 20px; /* Espaçamento interno do menu */
-    box-sizing: border-box; /* Inclui padding na largura total do elemento */
+    position:absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(3, 0, 23, 0.95);
+    padding: 20px;
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
 nav ul {
-    list-style-type: none; /* Remove marcadores de lista */
-    padding: 0; /* Remove o preenchimento padrão */
+    list-style-type: none;
+    padding: 0;
 }
 
 nav ul li {
-    display: inline; /* Exibe os itens da lista em linha */
-    margin-right: 20px; /* Espaçamento entre os itens da lista */
+    display: inline;
+    margin-right: 20px;
     font-size: large;
 
 }
 
 nav ul li a {
-    color: #fff; /* Cor dos links do menu */
-    text-decoration: none; /* Remove sublinhado dos links */
-    transition: color 0.3s ease; /* Transição suave para mudança de cor */
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 nav ul li a:hover {
-    color: #ff2d00; /* Cor dos links do menu ao passar o mouse */
+    color: #ff2d00;
     
 }
 
@@ -71,8 +71,8 @@ footer {
     background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     text-align: center;
-    margin: auto -17px; /*auto for top-bottom -17px for right-left*/
-    padding: 10px 0; /*10px for top-bottom, 0 for right-left*/
+    margin: auto -17px;
+    padding: 10px 0; 
     position: static;
     bottom: 0;
     width: 100vw;
