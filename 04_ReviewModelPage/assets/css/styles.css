@@ -163,6 +163,7 @@ h2 {
     }
 
     .product .rating {
+        margin-bottom: 7.5%;
         justify-content: center;
     }
 
@@ -213,6 +214,10 @@ h2 {
     padding: 20px;
     justify-content: space-around;
     transition: transform 0.3s ease;
+}
+
+iframe {
+    margin: 0;
 }
 
 .product img {

@@ -10,7 +10,7 @@ body {
     background-image: url(../../../resources/images/2151065718_mirror.png);
 }
 
-iframe {
+#header {
     width: 100%;
     height: 540px;
     border: none;
@@ -49,6 +49,12 @@ h2 {
     transition: transform 0.3s ease;
 }
 
+#product-detail {
+    width: 100%;
+    margin-bottom: 1vh;
+    border: none;
+}
+
 .product:hover {
     transform: translateY(-5px);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -68,7 +74,6 @@ h2 {
 .product .description {
     font-size: 14px;
     text-align: justify;
-    color: #555;
 }
 
 .product .price {

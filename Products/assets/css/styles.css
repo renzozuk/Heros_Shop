@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap');
+
+body {
+    font-family: "Outfit", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    min-width: 250px;
+    max-width: 350px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#image {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+img {
+    max-width: 80%;
+    max-height: 250px;
+    background: 50% 50% repeat;
+    margin: 3% auto 1%;
+}
+
+h3, .price {
+    text-align: center;
+}
+
+h3 {
+    font-size: 125%;
+}
+
+.description {
+    font-size: 90%;
+    text-align: justify;
+    color: #555;
+}
+
+.price {
+    margin-bottom: 0;
+    font-size: 125%;
+}
