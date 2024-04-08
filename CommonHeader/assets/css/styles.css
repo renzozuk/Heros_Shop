@@ -73,7 +73,8 @@ header {
 
 @media (min-width: 800px) {
     #account-buttons {
-        right: 20px;
+        top: 20px;
+        right: 35px;
     }
 
     nav {
@@ -90,7 +91,6 @@ header {
     width: 270px;
     height: 60px;
     position: absolute;
-    top: 20px;
     display: flex;
     flex-direction: row;
 }
