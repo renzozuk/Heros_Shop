@@ -76,10 +76,13 @@ h2 {
 }
 
 .input-box {
-    width: 82.5vw;
-    margin: 0 auto 5.5vh;
     color: white;
     gap: 10px;
+}
+
+.box {
+    width: 100%;
+    margin: 0 auto 5.5vh;
 }
 
 .input-box label {
@@ -108,7 +111,8 @@ h2 {
 }
 
 .input-box-small {
-    width: 400px;
+    width: 90%;
+    margin: 0 auto 1.5vh;
 }
 
 input {
@@ -182,10 +186,6 @@ footer {
 .product-container {
     display: flex;
     justify-content: space-between;
-}
-
-.input-box {
-    width: 100%;
 }
 
 #product-detail {
