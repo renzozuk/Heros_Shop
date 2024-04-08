@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="icon" type="image/x-icon" href="../resources/images/icon.webp">
+    <title>Hero's Shop - Pagamento</title>
+</head>
+<body>
+    <iframe id="header" src="../CommonHeader/index.html"></iframe>
+    <section class="main-content">
+        <h2>Compra do Produto</h2>
+        <div class="small_container" id="payment-container">
+            
+            <div class="product-container">
+                <iframe id="product-detail" scrolling="no" height="100px" src="../Products/html/productA1.html"></iframe>
+                <div class="box input-box">
+                    <h2>Dados do Cartão:</h2>
+                    <label for="Name">Titular do Cartão</label>
+                    <input type="text" id="name" placeholder="Nome Completo">
+                    <label for="card-number">Número do Cartão:</label>
+                    <input type="text" id="card-number" placeholder="Número do Cartão">
+                    <br>
+                    <label for="expiry-date">Data de Validade:</label>
+                    <input type="text" id="expiry-date" placeholder="MM/AA">
+                    <br>
+                    <label for="cvv">CVV:</label>
+                    <input type="text" id="cvv" placeholder="CVV">
+                    <br>
+                </div>
+                
+                <div class="box input-box">
+                    <h2>PIX:</h2>
+                    <div class="pix-image-container">
+                        <image src="assets\images\images.png" alt="PIX Image">
+                    </div>
+                </div>
+
+                <div class="box input-box">
+                    <h2>Opções de Frete:</h2>
+                    <div class="input-box-label">
+                        <input type="radio" name="frete" value="correios">
+                        <label>Correios - 15 dias úteis</label>
+                    </div>
+                    <div class="input-box-label">
+                        <input type="radio" name="frete" value="jadlog">
+                        <label>Jadlog - 8 dias úteis</label>
+                    </div>
+                    <div class="input-box-label">
+                        <input type="radio" name="frete" value="sedex">
+                        <label>Sedex - 3 dias úteis</label>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <div class="submit-button">
+                <button type="submit">Comprar</button>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Hero's Shop</p>
+    </footer>
+</body>
+</html>
