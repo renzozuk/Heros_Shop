@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
-    <iframe src="../CommonHeader/index.html"></iframe>
+    <iframe id="header" src="../CommonHeader/index.html"></iframe>
     <section class="main-content">
         <h2>Compra do Produto</h2>
         <div class="container small_container">
@@ -16,6 +16,8 @@
                 <iframe id="product-detail" scrolling="no" height="100px" src="../Products/html/productA2.html"></iframe>
                 <div class="input-box">
                     <h2>Dados do Cartão:</h2>
+                    <label for="Name">Titular do Cartão</label>
+                    <input type="text" id="name" placeholder="Monkey D Luffy">
                     <label for="card-number">Número do Cartão:</label>
                     <input type="text" id="card-number" placeholder="Número do Cartão">
                     <br>
@@ -25,9 +27,6 @@
                     <label for="cvv">CVV:</label>
                     <input type="text" id="cvv" placeholder="CVV">
                     <br>
-                    <label for="Name">Titular do Cartão</label>
-                    <input type="text" id="name" placeholder="Monkey D Luffy">
-
                 </div>
                 
                 <div class="input-box">

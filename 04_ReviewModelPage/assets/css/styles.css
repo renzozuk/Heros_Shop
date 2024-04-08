@@ -181,7 +181,7 @@ h2 {
     background-color: #fff;
     display: flex;
     flex-direction: column;
-    min-height: 250px;
+    min-height: 200px;
     border: 1px solid #ccc;
     padding: 20px;
     justify-content: space-around;
@@ -189,7 +189,7 @@ h2 {
 }
 
 #product-detail {
-    height: 540px;
+    height: 530px;
     margin: 0 auto;
 }
 

@@ -71,27 +71,6 @@ h2 {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
-.product img {
-    max-width: 100%;
-    height: 300px;
-    margin-bottom: 10px;
-}
-
-.product h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.product .description {
-    font-size: 14px;
-    text-align: justify;
-    color: #555;
-}
-
-.product .price {
-    font-size: 15px;
-}
-
 .buttons {
     display: flex;
     justify-content: space-around;

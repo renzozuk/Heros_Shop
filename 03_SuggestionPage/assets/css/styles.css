@@ -10,7 +10,7 @@ body {
     background-image: url(../../../resources/images/2151065718_mirror.png)   
 }
 
-iframe {
+#header {
     width: 100%;
     height: 540px;
     border: none;
