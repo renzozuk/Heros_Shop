@@ -3,7 +3,7 @@ Este repositório se trata de um projeto web referente a um website de uma loja 
 <div align="center"><img src="CommonHeader/assets/images/banner.png" width="830px" height="364px"></div>
 
 ## Página inicial
-<p align="justify">Na página inicial, é possível encotrar os principais produtos da loja, aqui é possível encontrar alguns produtos em destaques selecionados de todos os departamentos.</p>
+<p align="justify">Na página inicial, estão presentes os principais produtos da loja, aqui é possível encontrar alguns produtos em destaque selecionados de todos os departamentos.</p>
 <div align="center"><img src="resources/images/homepage-1880x872.png" width="830px" height="384px"></div>
 
 ## Página de pagamento
