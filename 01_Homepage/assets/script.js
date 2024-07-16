@@ -12,6 +12,7 @@ class Product {
 
 const path = "db-path-here";
 
+
 const productsContainer = document.getElementById("products-container");
 
 document.addEventListener("DOMContentLoaded", listProducts);
