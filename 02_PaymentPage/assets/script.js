@@ -10,7 +10,7 @@ class Product {
     }
 }
 
-const path = "https://heros-shop-default-rtdb.firebaseio.com/";
+const path = "https://heros-shop-i-default-rtdb.firebaseio.com/";
 
 const productDiv = document.querySelector(".product");
 
