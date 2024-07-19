@@ -10,7 +10,7 @@ class Product {
     }
 }
 
-const path = "https://heros-shop-default-rtdb.firebaseio.com/";
+const path = "https://heros-shop-i-default-rtdb.firebaseio.com/";
 
 const productsContainer = document.getElementById("products-container");
 
@@ -88,7 +88,7 @@ function createProductDiv(product) {
 
     const buttons = document.createElement("div");
     buttons.className = `buttons`;
-    buttons.innerHTML = `<a class="buy-button" onclick="exportId(this)"><button>Comprar</button></a>
+    buttons.innerHTML = `<a class="buy-button" onclick="redirectToBuyPage(this)"><button>Comprar</button></a>
                         <a href="#"><button>Ver Detalhes</button></a>`;
 
     productDiv.appendChild(image);
@@ -102,5 +102,14 @@ function createProductDiv(product) {
 
 function exportId(button) {
     localStorage.setItem("currentProduct", button.parentNode.parentNode.id);
+}
+
+function redirectToBuyPage(button) {
+    exportId(button);
     window.location.href = "../../02_PaymentPage/index.html";
+}
+
+function redirectToReviewPage(button) {
+    exportId(button);
+    window.location.href = "../../04_ReviewPage/index.html";
 }

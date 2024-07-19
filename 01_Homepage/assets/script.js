@@ -87,8 +87,8 @@ function createProductDiv(product) {
 
     const buttons = document.createElement("div");
     buttons.className = `buttons`;
-    buttons.innerHTML = `<a class="buy-button" onclick="exportId(this)"><button>Comprar</button></a>
-                        <a class="detail-button" onclick="" href="#"><button>Ver Detalhes</button></a>`;
+    buttons.innerHTML = `<a class="buy-button" onclick="redirectToBuyPage(this)"><button>Comprar</button></a>
+                        <a class="detail-button" onclick="redirectToReviewPage(this)"><button>Ver Detalhes</button></a>`;
 
     productDiv.appendChild(image);
     productDiv.appendChild(name);
@@ -101,5 +101,14 @@ function createProductDiv(product) {
 
 function exportId(button) {
     localStorage.setItem("currentProduct", button.parentNode.parentNode.id);
+}
+
+function redirectToBuyPage(button) {
+    exportId(button);
     window.location.href = "../02_PaymentPage/index.html";
+}
+
+function redirectToReviewPage(button) {
+    exportId(button);
+    window.location.href = "../04_ReviewPage/index.html";
 }
