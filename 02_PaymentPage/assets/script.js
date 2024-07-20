@@ -13,8 +13,26 @@ class Product {
 const path = "https://heros-shop-i-default-rtdb.firebaseio.com/";
 
 const productDiv = document.querySelector(".product");
+const purchaseDiv = document.querySelector(".purchase");
 
+document.addEventListener("DOMContentLoaded", lastPageMethod);
+document.addEventListener("DOMContentLoaded", getCurrentUser);
 document.addEventListener("DOMContentLoaded", getCurrentProduct);
+
+function lastPageMethod() {
+    localStorage.setItem("lastPage", "02_PaymentPage/index.html");
+}
+
+function getCurrentUser() {
+    if(localStorage.getItem("currentUser")){
+
+    }else{
+        const noUserText = document.createElement("p");
+        noUserText.className = "no-user-text";
+        noUserText.innerHTML = "Para continuar com a compra, você deve estar logado.";
+        purchaseDiv.appendChild(noUserText);
+    }
+}
 
 function getCurrentProduct() {
     fetchProduct()
@@ -76,4 +94,3 @@ function loadProductInformation(product) {
     productDiv.appendChild(description);
     productDiv.appendChild(price);
 }
-

@@ -14,7 +14,12 @@ const path = "https://heros-shop-i-default-rtdb.firebaseio.com/";
 
 const productDiv = document.querySelector(".product");
 
+document.addEventListener("DOMContentLoaded", lastPageMethod);
 document.addEventListener("DOMContentLoaded", getCurrentProduct);
+
+function lastPageMethod() {
+    localStorage.setItem("lastPage", "04_ReviewPage/index.html");
+}
 
 function getCurrentProduct() {
     fetchProduct()

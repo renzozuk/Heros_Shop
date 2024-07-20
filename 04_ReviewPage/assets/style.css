@@ -76,6 +76,10 @@ h2 {
         margin: 2px;
     }
 
+    .rating .rating-star {
+        font-size: 30px;
+    }
+
     @media (min-width: 1400px) {
         .product-container .rating img {
             max-width: 35px;
@@ -124,24 +128,13 @@ h2 {
         margin: 1.75% 1% 1% 1%;
     }
 
-    .comments .comment .comment-content .rating img {
+    .rating .stars-image {
         max-width: 27.5px;
         max-height: 27.5px;
     }
 
-    .comments .comment .comment-content .rating #rating-stars {
-        font-size: 22.5px;
-    }
-
-    .stars-image {
-        margin: 0;
-        max-width: 35px;
-        max-height: 35px;
-    }
-
-    #rating-stars {
-        margin: 0;
-        font-size: 30px;
+    .rating .rating-star {
+        font-size: 27.5px;
     }
 
     .buttons {
@@ -208,10 +201,27 @@ h3, .price {
     flex-direction: row;
 }
 
+.product-rating {
+    margin-bottom: 10px;
+    justify-content: space-evenly;
+}
+
 .rating-star {
     margin: 0;
-    font-size: 30px;
     color: #ffc107;
+}
+
+.product-rating .rating-star {
+    font-size: 30px;
+}
+
+.product-rating .stars-image {
+    max-width: 35px;
+    max-height: 35px;
+}
+
+.rating .stars-image {
+    margin: 0 10px;
 }
 
 .buttons {
@@ -275,7 +285,7 @@ h3, .price {
 }
 
 footer {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
     color: #fff;
     text-align: center;
     margin: 0;

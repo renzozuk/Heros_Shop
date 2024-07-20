@@ -12,10 +12,14 @@ class Product {
 
 const path = "https://heros-shop-i-default-rtdb.firebaseio.com/";
 
-
 const productsContainer = document.getElementById("products-container");
 
+document.addEventListener("DOMContentLoaded", lastPageMethod);
 document.addEventListener("DOMContentLoaded", listProducts);
+
+function lastPageMethod() {
+    localStorage.setItem("lastPage", "01_Homepage/index.html");
+}
 
 function listProducts() {
     fetchProducts()

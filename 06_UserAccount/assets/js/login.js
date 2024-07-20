@@ -20,8 +20,8 @@ document.addEventListener("DOMContentLoaded", function () {
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
             .then((response) => {
-                console.log(response);
-                window.location.href = "../../01_Homepage/index.html";
+                localStorage.setItem("currentUser", response);
+                window.location.href = `../../${localStorage.getItem("lastPage")}`;
             })
             .catch((error) => {
                 console.log("An error was catched when user was trying to login: ", error);
