@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .signInWithEmailAndPassword(email, password)
             .then((response) => {
                 console.log(response);
-                /* window.location.href = "../../01_Homepage/index.html"; */
+                window.location.href = `../../${localStorage.getItem("lastPage")}`;
             })
             .catch((error) => {
                 console.log("error", error);

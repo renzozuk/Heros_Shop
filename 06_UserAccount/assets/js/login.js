@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
 
-        console.log("antes");
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
             .then((response) => {

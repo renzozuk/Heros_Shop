@@ -7,7 +7,7 @@ function getLoginStatus() {
     if(localStorage.getItem("currentUser")){
         const userInfoContent = document.createElement("p");
 
-        userInfoContent.innerHTML = "Hi, {username here}!";
+        userInfoContent.innerHTML = "Olá, {username here}!";
 
         leftButton.appendChild(userInfoContent);
 
