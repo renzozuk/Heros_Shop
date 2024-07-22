@@ -26,7 +26,7 @@ function lastPageMethod() {
 }
 
 function getCurrentUser() {
-    if(localStorage.getItem("currentUser")){
+    if (localStorage.getItem("currentUser")) {
         const outerPaymentBox = document.createElement("div");
         outerPaymentBox.className = "outer-payment-box";
 
@@ -35,10 +35,10 @@ function getCurrentUser() {
 
         const paymentOptionsTitle = document.createElement("div");
         paymentOptionsTitle.className = "payment-options-title";
-        paymentOptionsTitle.innerHTML = `<h2 class="payment-options-title-text">Opções de pagamento</h2>`
+        paymentOptionsTitle.innerHTML = `<h2 class="payment-options-title-text">Opções de pagamento</h2>`;
 
         const paymentOptionsButtons = document.createElement("div");
-        paymentOptionsButtons.className = "payment-options-buttons"
+        paymentOptionsButtons.className = "payment-options-buttons";
 
         const cardButton = document.createElement("div");
         cardButton.className = "card-button";
@@ -79,15 +79,15 @@ function getCurrentUser() {
         outerPaymentBox.appendChild(paymentBox);
         purchaseDiv.appendChild(outerPaymentBox);
 
-        cardButton.addEventListener("mouseover", function(){
+        cardButton.addEventListener("mouseover", function () {
             cardImage.style = "width: 74px; height: 52px;";
         });
 
-        cardButton.addEventListener("mouseleave", function(){
+        cardButton.addEventListener("mouseleave", function () {
             cardImage.style = "width: 72px; height: 50px;";
         });
 
-        cardButton.addEventListener("click", function(){
+        cardButton.addEventListener("click", function () {
             choseOptionTitleText.innerHTML = "Método de pagamento escolhido: cartão de crédito/débito.";
             paymentContent.innerHTML = "";
 
@@ -143,15 +143,15 @@ function getCurrentUser() {
             paymentContent.appendChild(cardForm);
         });
 
-        bankSlipButton.addEventListener("mouseover", function(){
+        bankSlipButton.addEventListener("mouseover", function () {
             bankSlipImage.style = "width: 62px; height: 52px;";
         });
 
-        bankSlipButton.addEventListener("mouseleave", function(){
+        bankSlipButton.addEventListener("mouseleave", function () {
             bankSlipImage.style = "width: 60px; height: 50px;";
         });
 
-        bankSlipButton.addEventListener("click", function(){
+        bankSlipButton.addEventListener("click", function () {
             choseOptionTitleText.innerHTML = "Método de pagamento escolhido: boleto bancário.";
             paymentContent.innerHTML = "";
 
@@ -161,7 +161,7 @@ function getCurrentUser() {
 
             paymentContent.appendChild(boletoAdvice);
         });
-    }else{
+    } else {
         const noUserText = document.createElement("p");
         noUserText.className = "no-user-text";
         noUserText.innerHTML = "Para continuar com a compra, você deve estar logado.";
@@ -174,7 +174,7 @@ function getCurrentUser() {
 function getCurrentProduct() {
     fetchProduct()
         .then((product) => {
-            loadProductInformation(product)
+            loadProductInformation(product);
         })
         .catch((error) => {
             console.error("An error occured trying to load products list: ", error);
@@ -190,21 +190,15 @@ function fetchProduct() {
             return response.json();
         })
         .then((products) => {
-            for (let key in products) {
-                if(key == localStorage.getItem("currentProduct")){
-                    const product = new Product({
-                        id: key,
-                        name: products[key].name,
-                        description: products[key].description,
-                        price: products[key].price,
-                        photo: products[key].photo,
-                        category: products[key].category,
-                        origin_address: products[key].origin_address
-                    });
-
-                    return product;
-                }
-            }
+            return new Product({
+                id: localStorage.getItem("currentProduct"),
+                name: products[localStorage.getItem("currentProduct")].name,
+                description: products[localStorage.getItem("currentProduct")].description,
+                price: products[localStorage.getItem("currentProduct")].price,
+                photo: products[localStorage.getItem("currentProduct")].photo,
+                category: products[localStorage.getItem("currentProduct")].category,
+                origin_address: products[localStorage.getItem("currentProduct")].origin_address,
+            });
         });
 }
 
@@ -219,15 +213,15 @@ function loadProductInformation(product) {
     image.appendChild(photo);
 
     const name = document.createElement("h3");
-    name.innerHTML = `${product.name}`
+    name.innerHTML = `${product.name}`;
 
     const description = document.createElement("p");
     description.className = `description`;
-    description.innerHTML = `${product.description}`
+    description.innerHTML = `${product.description}`;
 
     const price = document.createElement("p");
     price.className = `price`;
-    price.innerHTML = `${product.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`;
+    price.innerHTML = `${product.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
 
     const productInfo = document.createElement("div");
     productInfo.className = "product-info";

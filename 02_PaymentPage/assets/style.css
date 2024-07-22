@@ -166,7 +166,7 @@ img {
 
 .card-button, .bank-slip-button {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
     cursor: pointer;
 }

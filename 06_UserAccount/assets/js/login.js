@@ -18,8 +18,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         firebase.auth()
             .signInWithEmailAndPassword(email, password)
-            .then((response) => {
-                localStorage.setItem("currentUser", response);
+            .then(() => {
+                localStorage.setItem("currentUser", firebase.auth().currentUser.uid);
                 window.location.href = `../../${localStorage.getItem("lastPage")}`;
             })
             .catch((error) => {
