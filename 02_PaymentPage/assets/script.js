@@ -80,7 +80,7 @@ function getCurrentUser() {
         purchaseDiv.appendChild(outerPaymentBox);
 
         cardButton.addEventListener("mouseover", function () {
-            cardImage.style = "width: 74px; height: 52px;";
+            cardImage.style = "width: 76px; height: 54px;";
         });
 
         cardButton.addEventListener("mouseleave", function () {
@@ -108,7 +108,7 @@ function getCurrentUser() {
             const cardNumberLabel = document.createElement("label");
             cardNumberLabel.innerHTML = "Número do cartão:";
             const cardNumberInput = document.createElement("input");
-            cardNumberInput.className = "card-name-input";
+            cardNumberInput.className = "card-number-input";
             cardNumberBox.appendChild(cardNumberLabel);
             cardNumberBox.appendChild(cardNumberInput);
 
@@ -144,7 +144,7 @@ function getCurrentUser() {
         });
 
         bankSlipButton.addEventListener("mouseover", function () {
-            bankSlipImage.style = "width: 62px; height: 52px;";
+            bankSlipImage.style = "width: 64px; height: 54px;";
         });
 
         bankSlipButton.addEventListener("mouseleave", function () {

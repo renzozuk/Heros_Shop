@@ -34,7 +34,7 @@ h2 {
     padding: 20px;
 }
 
-@media (orientation: landscape) {
+@media (min-width: 1360px) {
     .container {
         flex-direction: row;
     }
@@ -76,34 +76,29 @@ h2 {
         margin: 2px;
     }
 
+    .product-rating {
+        justify-content: space-evenly;
+    }
+
+    .stars-image {
+        margin: 0;
+    }
+
     .rating .rating-star {
         font-size: 30px;
     }
 
-    @media (min-width: 1400px) {
-        .product-container .rating img {
-            max-width: 35px;
-            max-height: 35px;
-        }
-    
-        .product-container .rating #rating-stars {
-            font-size: 30px;
-        }
+    .product-container .rating img {
+        max-width: 35px;
+        max-height: 35px;
     }
 
-    @media (max-width: 1400px) {
-        .product-container .rating img {
-            width: 1.775vw;
-            height: 1.775vw;
-        }
-    
-        .product-container .rating #rating-stars {
-            font-size: 1.75vw;
-        }
+    .product-container .rating #rating-stars {
+        font-size: 30px;
     }
 }
 
-@media (orientation: portrait) {
+@media (max-width: 1360px) {
     .container {
         width: 75vw;
         flex-direction: column;
@@ -111,6 +106,14 @@ h2 {
 
     .product-container {
         border-radius: calc(1vw + 1vh) calc(1vw + 1vh) 0 0;
+    }
+
+    .product-rating {
+        justify-content: center;
+    }
+
+    .rating .stars-image {
+        margin: 0 10px;
     }
 
     .comments {
@@ -144,10 +147,19 @@ h2 {
     .product-container button {
         margin: 1px 1.5vw;
     }
+
+    .product-container .rating img {
+        width: 1.775vw;
+        height: 1.775vw;
+    }
+
+    .product-container .rating #rating-stars {
+        font-size: 1.75vw;
+    }
 }
 
 .container {
-    margin: 7.5vh auto;
+    margin: calc(7.5vh - 20px) auto;
     display: flex;
     justify-content: center;
 }
@@ -203,7 +215,6 @@ h3, .price {
 
 .product-rating {
     margin-bottom: 10px;
-    justify-content: space-evenly;
 }
 
 .rating-star {
@@ -267,6 +278,7 @@ h3, .price {
 
 .comments .comment .comment-content h4 {
     margin: 10px auto;
+    padding-right: 10px;
     font-size: 120%;
 }
 

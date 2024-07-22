@@ -222,6 +222,10 @@ img {
     justify-content: center;
 }
 
+.owner-name-input, .card-number-input, .expiration-date-input, .cvv-input {
+    padding: 6px 12px;
+}
+
 .confirmation-button-box {
     width: 100%;
     display: flex;
