@@ -23,8 +23,10 @@ class Review {
 const path = "https://heros-shop-i-default-rtdb.firebaseio.com/";
 
 const productDiv = document.querySelector(".product");
-const comments = document.querySelector(".comments");
 const productRating = document.querySelector(".product-rating");
+const comments = document.querySelector(".comments");
+const commentsTitle = document.querySelector(".comments-title");
+const commentsSubtitle = document.querySelector(".comments-subtitle");
 
 document.addEventListener("DOMContentLoaded", lastPageMethod);
 document.addEventListener("DOMContentLoaded", getCurrentProduct);
@@ -97,30 +99,33 @@ function fetchReviews() {
     let promises = [];
 
     fetch(`${path}review.json`)
-      .then((response) => {
+        .then((response) => {
             if (!response.ok) {
                 throw new Error("Network answer was not ok.");
             }
             return response.json();
         })
-      .then((reviews) => {
+        .then((reviews) => {
             for (let key in reviews) {
-                promises.push(addReviewToCommentsSection(reviewStats, new Review({
-                    id: key,
-                    comment: reviews[key].comment,
-                    date: reviews[key].date,
-                    order: reviews[key].order,
-                    stars: reviews[key].stars
-                }), reviews[key].order));
+                promises.push(
+                    addReviewToCommentsSection(
+                        reviewStats,
+                        new Review({
+                            id: key,
+                            comment: reviews[key].comment,
+                            date: reviews[key].date,
+                            order: reviews[key].order,
+                            stars: reviews[key].stars,
+                        }),
+                        reviews[key].order
+                    )
+                );
             }
 
             return Promise.all(promises);
         })
-      .then(() => {
+        .then(() => {
             let starsAverage = reviewStats.starsSum / reviewStats.quantityOfReviews;
-
-            console.log(reviewStats.starsSum);
-            console.log(reviewStats.quantityOfReviews);
 
             for (let i = 0; i < Math.floor(starsAverage); i++) {
                 let star = document.createElement("img");
@@ -129,36 +134,50 @@ function fetchReviews() {
                 productRating.appendChild(star);
             }
 
-            if ((reviewStats.starsSum) && (reviewStats.quantityOfReviews) && Math.floor(starsAverage)!= Math.ceil(starsAverage)) {
+            if (reviewStats.starsSum && reviewStats.quantityOfReviews && Math.floor(starsAverage) != Math.ceil(starsAverage)) {
                 let star = document.createElement("img");
                 star.className = "stars-image";
                 star.src = "assets/images/star_half.png";
                 productRating.appendChild(star);
             }
 
-            for (let i = 0; i < (5 - Math.ceil(starsAverage)); i++) {
+            for (let i = 0; i < 5 - Math.ceil(starsAverage); i++) {
                 let star = document.createElement("img");
                 star.className = "stars-image";
                 star.src = "assets/images/star_unfilled.png";
                 productRating.appendChild(star);
             }
 
-            const ratingStar = document.createElement("p");
-            ratingStar.className = "rating-star";
-            ratingStar.innerHTML = `${starsAverage.toFixed(1)}`;
-            productRating.appendChild(ratingStar);
+            if (reviewStats.quantityOfReviews == 0) {
+                commentsTitle.innerHTML = `Não há avaliações para este produto.`;
+            } else if (reviewStats.quantityOfReviews == 1) {
+                commentsTitle.innerHTML = `Há ${reviewStats.quantityOfReviews} avaliação para este produto.`;
+            } else {
+                commentsTitle.innerHTML = `Há ${reviewStats.quantityOfReviews} avaliações para este produto.`;
+            }
+
+            if (reviewStats.quantityOfReviews >= 1) {
+                const ratingStar = document.createElement("p");
+                ratingStar.className = "rating-star";
+                ratingStar.innerHTML = `${starsAverage.toFixed(1)}`;
+                productRating.appendChild(ratingStar);
+            }
+
+            if (reviewStats.quantityOfReviews >= 4) {
+                commentsSubtitle.innerHTML = `Avaliações em destaque:`;
+            }
         });
 }
 
 function addReviewToCommentsSection(reviewStats, review, orderKey) {
     return fetch(`${path}order.json`)
-      .then((response) => {
+        .then((response) => {
             if (!response.ok) {
                 throw new Error("Network answer was not ok.");
             }
             return response.json();
         })
-      .then((orders) => {
+        .then((orders) => {
             if (orders[orderKey].product == localStorage.getItem("currentProduct")) {
                 reviewStats.quantityOfReviews++;
                 reviewStats.starsSum += review.stars;
@@ -167,7 +186,7 @@ function addReviewToCommentsSection(reviewStats, review, orderKey) {
                 commentDiv.className = "comment";
 
                 const userPhoto = document.createElement("img");
-                
+
                 const commentContent = document.createElement("div");
                 commentContent.className = "comment-content";
 
@@ -175,10 +194,10 @@ function addReviewToCommentsSection(reviewStats, review, orderKey) {
 
                 addUserInformationToReview(orders[orderKey].user, userPhoto, username);
 
-                const rating = document.createElement("div")
+                const rating = document.createElement("div");
                 rating.className = "rating";
 
-                for(let i = 0; i < review.stars; i++){
+                for (let i = 0; i < review.stars; i++) {
                     let star = document.createElement("img");
 
                     star.src = "assets/images/star_filled.png";
@@ -186,7 +205,7 @@ function addReviewToCommentsSection(reviewStats, review, orderKey) {
                     rating.appendChild(star);
                 }
 
-                for(let i = 0; i < (5 - review.stars); i++){
+                for (let i = 0; i < 5 - review.stars; i++) {
                     let star = document.createElement("img");
 
                     star.src = "assets/images/star_unfilled.png";
@@ -202,7 +221,10 @@ function addReviewToCommentsSection(reviewStats, review, orderKey) {
                 commentContent.appendChild(commentText);
                 commentDiv.appendChild(userPhoto);
                 commentDiv.appendChild(commentContent);
-                comments.appendChild(commentDiv);
+
+                if (reviewStats.quantityOfReviews <= 3) {
+                    comments.appendChild(commentDiv);
+                }
             }
         });
 }
@@ -216,9 +238,9 @@ function addUserInformationToReview(userKey, userPhoto, username) {
             return response.json();
         })
         .then((users) => {
-            if(users[userKey].photo){
+            if (users[userKey].photo) {
                 userPhoto.src = users[userKey].photo;
-            }else{
+            } else {
                 userPhoto.src = "https://placehold.jp/12/ff2d00/ffffff/75x75.png?text=no+photo";
             }
 

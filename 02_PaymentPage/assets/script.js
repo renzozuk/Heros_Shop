@@ -17,6 +17,8 @@ const purchaseDiv = document.querySelector(".purchase");
 const confirmationButtonBox = document.querySelector(".confirmation-button-box");
 const confirmationButton = document.querySelector(".confirmation-button");
 
+let paymentOption = -1;
+
 document.addEventListener("DOMContentLoaded", lastPageMethod);
 document.addEventListener("DOMContentLoaded", getCurrentUser);
 document.addEventListener("DOMContentLoaded", getCurrentProduct);
@@ -54,18 +56,14 @@ function getCurrentUser() {
         bankSlipImage.className = "bank-slip-image";
         bankSlipImage.src = "assets/images/orange_bank_slip.png";
 
-        const choseOptionTitle = document.createElement("div");
-        choseOptionTitle.className = "chose-option-title";
-
-        const choseOptionTitleText = document.createElement("p");
-        choseOptionTitleText.className = "chose-option-title-text";
-        choseOptionTitleText.innerHTML = "Escolha o método de pagamento de sua preferência.";
+        const chosenPaymentOptionTitle = document.createElement("div");
+        chosenPaymentOptionTitle.className = "chosen-payment-option-title";
+        const chosenPaymentOptionTitleText = document.createElement("p");
+        chosenPaymentOptionTitleText.className = "chosen-payment-option-title-text";
+        chosenPaymentOptionTitleText.innerHTML = "Escolha o método de pagamento de sua preferência.";
 
         const paymentContent = document.createElement("div");
         paymentContent.className = "payment-content";
-
-        confirmationButtonBox.style = "height: fit-content;";
-        confirmationButton.style.visibility = "visible";
 
         cardButton.appendChild(cardImage);
         bankSlipButton.appendChild(bankSlipImage);
@@ -73,8 +71,8 @@ function getCurrentUser() {
         paymentOptionsButtons.appendChild(bankSlipButton);
         paymentBox.appendChild(paymentOptionsTitle);
         paymentBox.appendChild(paymentOptionsButtons);
-        choseOptionTitle.appendChild(choseOptionTitleText);
-        paymentBox.appendChild(choseOptionTitle);
+        chosenPaymentOptionTitle.appendChild(chosenPaymentOptionTitleText);
+        paymentBox.appendChild(chosenPaymentOptionTitle);
         paymentBox.appendChild(paymentContent);
         outerPaymentBox.appendChild(paymentBox);
         purchaseDiv.appendChild(outerPaymentBox);
@@ -88,7 +86,9 @@ function getCurrentUser() {
         });
 
         cardButton.addEventListener("click", function () {
-            choseOptionTitleText.innerHTML = "Método de pagamento escolhido: cartão de crédito/débito.";
+            paymentOption = 0;
+
+            chosenPaymentOptionTitleText.innerHTML = "Método de pagamento escolhido: cartão de crédito/débito.";
             paymentContent.innerHTML = "";
 
             const cardForm = document.createElement("form");
@@ -97,6 +97,7 @@ function getCurrentUser() {
             ownerNameBox.className = "card-box";
             ownerNameBox.style = "margin-top: 60px;";
             const ownerNameLabel = document.createElement("label");
+            ownerNameLabel.className = "owner-name-label";
             ownerNameLabel.innerHTML = "Titular do cartão:";
             const ownerNameInput = document.createElement("input");
             ownerNameInput.className = "owner-name-input";
@@ -106,15 +107,18 @@ function getCurrentUser() {
             const cardNumberBox = document.createElement("div");
             cardNumberBox.className = "card-box";
             const cardNumberLabel = document.createElement("label");
+            cardNumberLabel.className = "card-number-label";
             cardNumberLabel.innerHTML = "Número do cartão:";
             const cardNumberInput = document.createElement("input");
             cardNumberInput.className = "card-number-input";
+            cardNumberInput.placeholder = "0000 0000 0000 0000";
             cardNumberBox.appendChild(cardNumberLabel);
             cardNumberBox.appendChild(cardNumberInput);
 
             const expirationDateBox = document.createElement("div");
             expirationDateBox.className = "card-box";
             const expirationDateLabel = document.createElement("label");
+            expirationDateLabel.className = "expiration-date-label";
             expirationDateLabel.innerHTML = "Data de validade:";
             const expirationDateInput = document.createElement("input");
             expirationDateInput.className = "expiration-date-input";
@@ -129,9 +133,11 @@ function getCurrentUser() {
             cvvBox.className = "card-box";
             cvvBox.style = "margin-bottom: 60px;";
             const cvvLabel = document.createElement("label");
+            cvvLabel.className = "cvv-label";
             cvvLabel.innerHTML = "CVV:";
             const cvvInput = document.createElement("input");
             cvvInput.className = "cvv-input";
+            cvvInput.placeholder = "000";
             cvvBox.appendChild(cvvLabel);
             cvvBox.appendChild(cvvInput);
 
@@ -152,7 +158,9 @@ function getCurrentUser() {
         });
 
         bankSlipButton.addEventListener("click", function () {
-            choseOptionTitleText.innerHTML = "Método de pagamento escolhido: boleto bancário.";
+            paymentOption = 1;
+
+            chosenPaymentOptionTitleText.innerHTML = "Método de pagamento escolhido: boleto bancário.";
             paymentContent.innerHTML = "";
 
             const boletoAdvice = document.createElement("p");
@@ -161,6 +169,160 @@ function getCurrentUser() {
 
             paymentContent.appendChild(boletoAdvice);
         });
+
+        const outerFreightBox = document.createElement("div");
+        outerFreightBox.className = "outer-freight-box";
+
+        const freightBox = document.createElement("div");
+        freightBox.className = "freight-box";
+
+        const freightOptionsTitle = document.createElement("div");
+        freightOptionsTitle.className = "freight-options-title";
+        freightOptionsTitle.innerHTML = `<h2 class="payment-options-title-text">Opções de frete</h2>`;
+
+        const freightContent = document.createElement("div");
+        freightContent.className = "freight-content";
+
+        const addressForm = document.createElement("form");
+
+        const streetBox = document.createElement("div");
+        streetBox.className = "street-box";
+        const streetLabel = document.createElement("label");
+        streetLabel.className = "street-label";
+        streetLabel.innerHTML = "Logradouro:"
+        const streetInput = document.createElement("input");
+        streetInput.className = "street-input";
+        streetBox.appendChild(streetLabel);
+        streetBox.appendChild(streetInput);
+
+        const houseNumberBox = document.createElement("div");
+        houseNumberBox.className = "house-number-box";
+        const houseNumberLabel = document.createElement("label");
+        houseNumberLabel.className = "house-number-label";
+        houseNumberLabel.innerHTML = "Número:"
+        const houseNumberInput = document.createElement("input");
+        houseNumberInput.className = "house-number-input";
+        houseNumberBox.appendChild(houseNumberLabel);
+        houseNumberBox.appendChild(houseNumberInput);
+
+        const neighborhoodBox = document.createElement("div");
+        neighborhoodBox.className = "neighborhood-box";
+        const neighborhoodLabel = document.createElement("label");
+        neighborhoodLabel.className = "neighborhood-label";
+        neighborhoodLabel.innerHTML = "Bairro:"
+        const neighborhoodInput = document.createElement("input");
+        neighborhoodInput.className = "neighborhood-input";
+        neighborhoodBox.appendChild(neighborhoodLabel);
+        neighborhoodBox.appendChild(neighborhoodInput);
+
+        const cityBox = document.createElement("div");
+        cityBox.className = "city-box";
+        const cityLabel = document.createElement("label");
+        cityLabel.className = "city-label";
+        cityLabel.innerHTML = "Cidade:"
+        const cityInput = document.createElement("input");
+        cityInput.className = "city-input";
+        cityBox.appendChild(cityLabel);
+        cityBox.appendChild(cityInput);
+
+        const stateBox = document.createElement("div");
+        stateBox.className = "state-box";
+        const stateLabel = document.createElement("label");
+        stateLabel.className = "state-label";
+        stateLabel.innerHTML = "Estado:"
+        const stateInput = document.createElement("input");
+        stateInput.className = "state-input";
+        stateBox.appendChild(stateLabel);
+        stateBox.appendChild(stateInput);
+
+        const zipCodeBox = document.createElement("div");
+        zipCodeBox.className = "zip-code-box";
+        const zipCodeLabel = document.createElement("label");
+        zipCodeLabel.className = "zip-code-label";
+        zipCodeLabel.innerHTML = "CEP:"
+        const zipCodeInput = document.createElement("input");
+        zipCodeInput.className = "zip-code-input";
+        zipCodeBox.appendChild(zipCodeLabel);
+        zipCodeBox.appendChild(zipCodeInput);
+
+        const freightBoxBottom = document.createElement("div");
+        freightBoxBottom.className = "freight-box-bottom";
+
+        const freightOptionsButtons = document.createElement("div");
+        freightOptionsButtons.className = "freight-options-buttons";
+
+        const firstFreightOptionButton = document.createElement("div");
+        firstFreightOptionButton.className = "first-freight-option-button";
+        const firstFreightOptionTitle = document.createElement("p");
+        firstFreightOptionTitle.className = "first-freight-option-title";
+        firstFreightOptionTitle.innerHTML = `Transportadora "A mais rápida"`;
+        const firstFreightOptionTime = document.createElement("p");
+        firstFreightOptionTime.className = "first-freight-option-time";
+        firstFreightOptionTime.innerHTML = "Tempo aproximado: x dias";
+        const firstFreightOptionPrice = document.createElement("p");
+        firstFreightOptionPrice.className = "first-freight-option-price";
+        firstFreightOptionPrice.innerHTML = "R$ 00,00";
+        firstFreightOptionButton.appendChild(firstFreightOptionTitle);
+        firstFreightOptionButton.appendChild(firstFreightOptionTime);
+        firstFreightOptionButton.appendChild(firstFreightOptionPrice);
+
+        const secondFreightOptionButton = document.createElement("div");
+        secondFreightOptionButton.className = "second-freight-option-button";
+        const secondFreightOptionTitle = document.createElement("p");
+        secondFreightOptionTitle.className = "second-freight-option-title";
+        secondFreightOptionTitle.innerHTML = `Transportadora "A mais veloz"`;
+        const secondFreightOptionTime = document.createElement("p");
+        secondFreightOptionTime.className = "second-freight-option-time";
+        secondFreightOptionTime.innerHTML = "Tempo aproximado: y dias";
+        const secondFreightOptionPrice = document.createElement("p");
+        secondFreightOptionPrice.className = "second-freight-option-price";
+        secondFreightOptionPrice.innerHTML = "R$ 00,00";
+        secondFreightOptionButton.appendChild(secondFreightOptionTitle);
+        secondFreightOptionButton.appendChild(secondFreightOptionTime);
+        secondFreightOptionButton.appendChild(secondFreightOptionPrice);
+
+        const thirdFreightOptionButton = document.createElement("div");
+        thirdFreightOptionButton.className = "third-freight-option-button";
+        const thirdFreightOptionTitle = document.createElement("p");
+        thirdFreightOptionTitle.className = "third-freight-option-title";
+        thirdFreightOptionTitle.innerHTML = `Correios`;
+        const thirdFreightOptionTime = document.createElement("p");
+        thirdFreightOptionTime.className = "third-freight-option-time";
+        thirdFreightOptionTime.innerHTML = "Tempo aproximado: z dias";
+        const thirdFreightOptionPrice = document.createElement("p");
+        thirdFreightOptionPrice.className = "third-freight-option-price";
+        thirdFreightOptionPrice.innerHTML = "R$ 00,00";
+        thirdFreightOptionButton.appendChild(thirdFreightOptionTitle);
+        thirdFreightOptionButton.appendChild(thirdFreightOptionTime);
+        thirdFreightOptionButton.appendChild(thirdFreightOptionPrice);
+
+        const chosenFreightOptionTitle = document.createElement("div");
+        chosenFreightOptionTitle.className = "chosen-freight-option-title";
+        const chosenFreightOptionTitleText = document.createElement("p");
+        chosenFreightOptionTitleText.className = "chosen-freight-option-title-text";
+        chosenFreightOptionTitleText.innerHTML = "Escolha a opção de frete de sua preferência.";
+
+        freightBox.appendChild(freightOptionsTitle);
+        addressForm.appendChild(streetBox);
+        addressForm.appendChild(houseNumberBox);
+        addressForm.appendChild(neighborhoodBox);
+        addressForm.appendChild(cityBox);
+        addressForm.appendChild(stateBox);
+        addressForm.appendChild(zipCodeBox);
+        freightContent.appendChild(addressForm);
+        freightBox.appendChild(freightContent);
+        chosenFreightOptionTitle.appendChild(chosenFreightOptionTitleText);
+        freightOptionsButtons.appendChild(firstFreightOptionButton);
+        freightOptionsButtons.appendChild(secondFreightOptionButton);
+        freightOptionsButtons.appendChild(thirdFreightOptionButton);
+        freightBoxBottom.appendChild(freightOptionsButtons);
+        freightBoxBottom.appendChild(chosenFreightOptionTitle);
+        freightBox.appendChild(freightBoxBottom);
+        outerFreightBox.appendChild(freightBox);
+        purchaseDiv.appendChild(outerFreightBox);
+
+        confirmationButtonBox.style = "height: fit-content;";
+        confirmationButton.style.visibility = "visible";
     } else {
         const noUserText = document.createElement("p");
         noUserText.className = "no-user-text";

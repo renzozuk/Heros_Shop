@@ -127,17 +127,21 @@ img {
     background-color: #fff;
 }
 
-.outer-payment-box {
+.outer-payment-box, .outer-freight-box {
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
-.payment-box {
+.payment-box, .freight-box {
     width: 80%;
 }
 
-.payment-options-title {
+.freight-box {
+    margin-top: 25px;
+}
+
+.payment-options-title, .freight-options-title {
     height: 60px;
     border-radius: 60px 60px 0 0;
     display: flex;
@@ -146,12 +150,12 @@ img {
     background-color: #ff2d00;
 }
 
-.payment-options-title-text {
+.payment-options-title-text, .freight-options-title-text {
     margin: 0 auto;
     font-size: 32px;
 }
 
-.payment-options-buttons {
+.payment-options-buttons, .freight-options-buttons {
     display: flex;
     flex-direction: row;
 }
@@ -180,6 +184,36 @@ img {
     height: 50px;
 }
 
+.freight-box-bottom {
+    border: 3px solid #ff2d00;
+    border-radius: 0 0 60px 60px;
+    background-color: #ff2d00;
+}
+
+.first-freight-option-button, .third-freight-option-button {
+    width: 33.33%;
+    background-color: whitesmoke;
+}
+
+.second-freight-option-button {
+    width: 33.34%;
+    border: 3px solid #ff2d00;
+    border-top: 0;
+    border-bottom: 0;
+    background-color: whitesmoke;
+}
+
+.first-freight-option-title, .first-freight-option-time, .first-freight-option-price, .second-freight-option-title, .second-freight-option-time, .second-freight-option-price, .third-freight-option-title, .third-freight-option-time, .third-freight-option-price {
+    margin: 10px auto;
+    text-align: center;
+    font-weight: bold;
+    color: #ff2d00;
+}
+
+.first-freight-option-title, .second-freight-option-title, .third-freight-option-title {
+    font-size: 110%;
+}
+
 /* .bank-slip-button {
 
 } */
@@ -189,23 +223,37 @@ img {
     height: 50px;
 }
 
-.chose-option-title {
+.chosen-payment-option-title, .chosen-freight-option-title {
     margin: 0 auto;
     padding: 10px 0;
+}
+
+.chosen-payment-option-title {
     background-color: #ff2d00;
 }
 
-.chose-option-title-text {
+.chosen-payment-option-title-text, .chosen-freight-option-title-text {
     margin: 0 auto;
     text-align: center;
     color:#fff;
 }
 
-.payment-content {
+.payment-content, .freight-content {
     height: fit-content;
-    border-radius: 0 0 60px 60px;
-    background-color: whitesmoke;
     border: 3px solid #ff2d00;
+    background-color: whitesmoke;
+}
+
+.payment-content {
+    border-radius: 0 0 60px 60px;
+    border: 3px solid #ff2d00;
+}
+
+.freight-content {
+    border-bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .no-user-text {
@@ -222,9 +270,19 @@ img {
     justify-content: center;
 }
 
-.owner-name-input, .card-number-input, .expiration-date-input, .cvv-input {
-    padding: 6px 12px;
+.owner-name-label, .card-number-label, .expiration-date-label, .cvv-label {
+    margin: 5px;
 }
+
+.owner-name-input, .card-number-input, .expiration-date-input, .cvv-input {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* .owner-name-input:focus, .card-number-input:focus, .expiration-date-input:focus, .cvv-input:focus {
+    border: none;
+} */
 
 .confirmation-button-box {
     width: 100%;
