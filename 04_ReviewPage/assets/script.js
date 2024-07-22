@@ -93,71 +93,75 @@ function loadProductInformation(product) {
 }
 
 function fetchReviews() {
-    let quantityOfReviews = 0.0;
-    let starsSum = 0.0;
+    let reviewStats = { quantityOfReviews: 0.0, starsSum: 0.0 };
+    let promises = [];
 
     fetch(`${path}review.json`)
-        .then((response) => {
+      .then((response) => {
             if (!response.ok) {
                 throw new Error("Network answer was not ok.");
             }
             return response.json();
         })
-        .then((reviews) => {
-            for(let key in reviews){
-                addReviewToCommentsSection(quantityOfReviews, starsSum, new Review({
+      .then((reviews) => {
+            for (let key in reviews) {
+                promises.push(addReviewToCommentsSection(reviewStats, new Review({
                     id: key,
                     comment: reviews[key].comment,
                     date: reviews[key].date,
                     order: reviews[key].order,
                     stars: reviews[key].stars
-                }), reviews[key].order);
+                }), reviews[key].order));
             }
+
+            return Promise.all(promises);
+        })
+      .then(() => {
+            let starsAverage = reviewStats.starsSum / reviewStats.quantityOfReviews;
+
+            console.log(reviewStats.starsSum);
+            console.log(reviewStats.quantityOfReviews);
+
+            for (let i = 0; i < Math.floor(starsAverage); i++) {
+                let star = document.createElement("img");
+                star.className = "stars-image";
+                star.src = "assets/images/star_filled.png";
+                productRating.appendChild(star);
+            }
+
+            if ((reviewStats.starsSum) && (reviewStats.quantityOfReviews) && Math.floor(starsAverage)!= Math.ceil(starsAverage)) {
+                let star = document.createElement("img");
+                star.className = "stars-image";
+                star.src = "assets/images/star_half.png";
+                productRating.appendChild(star);
+            }
+
+            for (let i = 0; i < (5 - Math.ceil(starsAverage)); i++) {
+                let star = document.createElement("img");
+                star.className = "stars-image";
+                star.src = "assets/images/star_unfilled.png";
+                productRating.appendChild(star);
+            }
+
+            const ratingStar = document.createElement("p");
+            ratingStar.className = "rating-star";
+            ratingStar.innerHTML = `${starsAverage.toFixed(1)}`;
+            productRating.appendChild(ratingStar);
         });
-
-    let starsAverage = starsSum / quantityOfReviews;
-
-    console.log(starsSum);
-    console.log(quantityOfReviews);
-
-    for(let i = 0; i < Math.floor(starsAverage); i++){
-        let star = document.createElement("img");
-        star.className = "stars-image";
-        star.src = "assets/images/star_filled.png";
-        productRating.appendChild(star);
-    }
-
-    if(Math.floor(starsAverage) != Math.ceil(starsAverage)){
-        let star = document.createElement("img");
-        star.className = "stars-image";
-        star.src = "assets/images/star_half.png";
-        productRating.appendChild(star);
-    }
-
-    for(let i = 0; i < (5 - Math.ceil(starsAverage)); i++){
-        let star = document.createElement("img");
-        star.className = "stars-image";
-        star.src = "assets/images/star_unfilled.png";
-        productRating.appendChild(star);
-    }
-
-    const ratingStar = document.createElement("p");
-    ratingStar.className = "rating-star";
-    ratingStar.innerHTML = `${starsAverage}`;
 }
 
-function addReviewToCommentsSection(quantityOfReviews, starsSum, review, orderKey) {
+function addReviewToCommentsSection(reviewStats, review, orderKey) {
     return fetch(`${path}order.json`)
-        .then((response) => {
+      .then((response) => {
             if (!response.ok) {
                 throw new Error("Network answer was not ok.");
             }
             return response.json();
         })
-        .then((orders) => {
-            if(orders[orderKey].product == localStorage.getItem("currentProduct")){
-                quantityOfReviews++;
-                starsSum += review.stars;
+      .then((orders) => {
+            if (orders[orderKey].product == localStorage.getItem("currentProduct")) {
+                reviewStats.quantityOfReviews++;
+                reviewStats.starsSum += review.stars;
 
                 const commentDiv = document.createElement("div");
                 commentDiv.className = "comment";
