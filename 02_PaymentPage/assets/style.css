@@ -18,7 +18,7 @@ iframe {
     border: none;
 }
 
-@media (orientation: landscape) {
+@media (min-width: 1200px) {
     .container {
         width: 65vw;
     }
@@ -28,7 +28,7 @@ iframe {
     }
 }
 
-@media (orientation: portrait) {
+@media (max-width: 1200px) {
     .container {
         width: 75vw;
     }
@@ -75,7 +75,7 @@ h3 {
     font-size: 180%;
 }
 
-h3, .price {
+h3, .price, .origin {
     text-align: center;
 }
 
@@ -120,6 +120,12 @@ img {
 .price {
     margin: 10px auto;
     font-size: 160%;
+}
+
+.origin {
+    margin: 0 auto 10px;
+    font-size: 140%;
+    padding: 0 20px;
 }
 
 .purchase {
@@ -187,13 +193,17 @@ img {
 .freight-box-bottom {
     border: 3px solid #ff2d00;
     border-top: 0;
-    border-radius: 0 0 60px 60px;
+    border-radius: 0 0 40px 40px;
     background-color: #ff2d00;
+}
+
+.first-freight-option-button, .second-freight-option-button, .third-freight-option-button {
+    background-color: #dedede;
+    cursor: pointer;
 }
 
 .first-freight-option-button, .third-freight-option-button {
     width: 33.33%;
-    background-color: #dedede;
 }
 
 .second-freight-option-button {
@@ -201,7 +211,6 @@ img {
     border: 3px solid #ff2d00;
     border-top: 0;
     border-bottom: 0;
-    background-color: #dedede;
 }
 
 .first-freight-option-title, .first-freight-option-time, .first-freight-option-price, .second-freight-option-title, .second-freight-option-time, .second-freight-option-price, .third-freight-option-title, .third-freight-option-time, .third-freight-option-price {
@@ -250,12 +259,12 @@ img {
     border: 3px solid #ff2d00;
 }
 
-.freight-content {
-    /* border-bottom: 3px; */
-    /* display: flex;
+/* .freight-content {
+     border-bottom: 3px;
+     display: flex;
     flex-direction: row;
-    justify-content: center; */
-}
+    justify-content: center; 
+} */
 
 .no-user-text {
     margin: 4px auto 14px;
@@ -271,6 +280,30 @@ img {
     justify-content: center;
 }
 
+.address-option-box {
+    margin: 10px auto;
+}
+
+#default-address-option-input, #other-address-option-input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: #fff;
+    border: 2px solid #000;
+}
+  
+#default-address-option-input:checked, #other-address-option-input:checked {
+    background-color: #ff2d00;
+    border-color: #000;
+}
+
+#default-address-option-label, #other-address-option-label {
+    font-size: 18px;
+}
+
 .owner-name-label, .card-number-label, .expiration-date-label, .cvv-label, .address-label {
     margin: 5px;
 }
@@ -281,8 +314,43 @@ img {
     border: none;
 }
 
+.card-number-validation-box {
+    display: flex;
+    flex-direction: row;
+}
+
+.card-number-input {
+    width: calc(100% - 90px);
+    margin-right: 10px;
+}
+
+
 .cvv-input, .house-number-input, .zip-code-input {
     width: 100px;
+}
+
+.calculate-freight-box {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.calculate-freight-box button {
+    width: 155px;
+    height: 55px;
+    margin: 0 auto 20px;
+    border-radius: 20px;
+    outline: none;
+    border: none;
+    background-color: #ff2d00;
+    color: #fff;
+    cursor: pointer;
+}
+
+.calculate-freight-box button:hover {
+    background-color: #fc1414;
+    color: #dedede;
 }
 
 .confirmation-button-box {

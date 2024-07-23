@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function (){
     
 
     document.getElementById("signup").addEventListener("submit", function (event) {
-        event.preventDefault(); // Evita o envio padrão do formulário
+        event.preventDefault();
     
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;

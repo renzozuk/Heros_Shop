@@ -10,6 +10,18 @@ class Product {
     }
 }
 
+class Order {
+    constructor({ id, date_of_delivery, date_of_purchase, destination_address, payment_method, product, user }) {
+        this.id = id;
+        this.date_of_delivery = date_of_delivery;
+        this.date_of_purchase = date_of_purchase;
+        this.destination_address = destination_address;
+        this.payment_method = payment_method;
+        this.product = product;
+        this.user = user;
+    }
+}
+
 const path = "https://heros-shop-i-default-rtdb.firebaseio.com/";
 
 const productDiv = document.querySelector(".product");
@@ -17,11 +29,41 @@ const purchaseDiv = document.querySelector(".purchase");
 const confirmationButtonBox = document.querySelector(".confirmation-button-box");
 const confirmationButton = document.querySelector(".confirmation-button");
 
+let isFreightPriceCalculated = false;
+
 let paymentOption = -1;
+let freightOption = -1;
+
+let pp;
+
+let t1p;
+let t2p;
+let cp;
+let t1t;
+let t2t;
+let ct;
 
 document.addEventListener("DOMContentLoaded", lastPageMethod);
 document.addEventListener("DOMContentLoaded", getCurrentUser);
 document.addEventListener("DOMContentLoaded", getCurrentProduct);
+
+let originPlacePromise = fetch(`${path}product.json`)
+    .then((response) => response.json())
+    .then((products) => {
+        let a = fetch(`${path}address.json`)
+            .then((response) => response.json())
+            .then((addresses) => {
+                let b = fetch(`https://nominatim.openstreetmap.org/search?format=json&street=${addresses[products[localStorage.getItem("currentProduct")].origin_address].street}&city=${addresses[products[localStorage.getItem("currentProduct")].origin_address].city}&state=${addresses[products[localStorage.getItem("currentProduct")].origin_address].state}&country=Brazil`)
+                    .then((response) => response.json())
+                    .then((response) => {
+                        return [parseFloat(response[0].lat), parseFloat(response[0].lon)];
+                    });
+
+                return b;
+            });
+
+        return a;
+    });
 
 function lastPageMethod() {
     localStorage.setItem("lastPage", "02_PaymentPage/index.html");
@@ -109,21 +151,36 @@ function getCurrentUser() {
             const cardNumberLabel = document.createElement("label");
             cardNumberLabel.className = "card-number-label";
             cardNumberLabel.innerHTML = "Número do cartão:";
+            const cardNumberValidationBox = document.createElement("div");
+            cardNumberValidationBox.className = "card-number-validation-box";
             const cardNumberInput = document.createElement("input");
             cardNumberInput.className = "card-number-input";
             cardNumberInput.placeholder = "0000 0000 0000 0000";
+            const cardNumberBrand = document.createElement("img");
+            cardNumberBrand.style = "width: 80px; height: 35px; visibility: hidden;";
+            cardNumberValidationBox.appendChild(cardNumberInput);
+            cardNumberValidationBox.appendChild(cardNumberBrand);
             cardNumberBox.appendChild(cardNumberLabel);
-            cardNumberBox.appendChild(cardNumberInput);
+            cardNumberValidationBox.appendChild(cardNumberInput);
+            cardNumberValidationBox.appendChild(cardNumberBrand);
+            cardNumberBox.appendChild(cardNumberValidationBox);
 
-            cardNumberInput.addEventListener("input", function(e) {
-                if(cardNumberInput.value.length == 13 || cardNumberInput.value.length == 16 || cardNumberInput.value.length == 19){
-                    if(cardNumberInput.value.charAt(0) == "4" && isCardNumberValid(cardNumberInput.value)){
-                        console.log("Valid Visa number.");
-                    }else if(((parseInt(cardNumberInput.value.substring(0, 2)) >= 51 && parseInt(cardNumberInput.value.substring(0, 2)) <= 55) || (parseInt(cardNumberInput.value.substring(0, 4)) >= 2221 && parseInt(cardNumberInput.value.substring(0, 4)) <= 2720)) && isCardNumberValid(cardNumberInput.value)){
-                        console.log("Valid MasterCard number.");
-                    }else{
+            cardNumberInput.addEventListener("input", function () {
+                if (cardNumberInput.value.length == 13 || cardNumberInput.value.length == 16 || cardNumberInput.value.length == 19) {
+                    if (cardNumberInput.value.charAt(0) == "4" && isCardNumberValid(cardNumberInput.value)) {
+                        cardNumberBrand.style.visibility = "visible";
+                        cardNumberBrand.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/1024px-Visa_Inc._logo.svg.png";
+                    } else if (((parseInt(cardNumberInput.value.substring(0, 2)) >= 51 && parseInt(cardNumberInput.value.substring(0, 2)) <= 55) || (parseInt(cardNumberInput.value.substring(0, 4)) >= 2221 && parseInt(cardNumberInput.value.substring(0, 4)) <= 2720)) && isCardNumberValid(cardNumberInput.value)) {
+                        cardNumberBrand.style.visibility = "visible";
+                        cardNumberBrand.src = "https://logos-world.net/wp-content/uploads/2020/09/Mastercard-Logo.png";
+                    } else {
+                        cardNumberBrand.style.visibility = "hidden";
                         console.log("Card number not valid.");
+                        cardNumberBrand.src = "";
                     }
+                } else {
+                    cardNumberBrand.style.visibility = "hidden";
+                    cardNumberBrand.src = "";
                 }
             });
 
@@ -159,6 +216,49 @@ function getCurrentUser() {
             cardForm.appendChild(cvvBox);
 
             paymentContent.appendChild(cardForm);
+
+            confirmationButton.addEventListener("click", function () {
+                if (paymentOption == 0) {
+                    let totalPrice = pp;
+
+                    let today = new Date(Date.now());
+                    let deliveryDate = new Date(Date.now());
+
+                    if (freightOption == 1) {
+                        totalPrice += t1p;
+                        deliveryDate.setDate(deliveryDate.getDate() + t1t);
+                    } else if (freightOption == 2) {
+                        totalPrice += t2p;
+                        deliveryDate.setDate(deliveryDate.getDate() + t2t);
+                    } else if (freightOption == 3) {
+                        totalPrice += cp;
+                        deliveryDate.setDate(deliveryDate.getDate() + ct);
+                    } else {
+                        window.alert("Por favor, selecione uma opção de frete.");
+                        return;
+                    }
+
+                    if (!ownerNameInput.value || !cardNumberInput.value || !expirationDateInput.value || !cvvInput.value) {
+                        window.alert("Preencha todos os campos de pagamento.");
+                    } else if (!isCardNumberValid(cardNumberInput.value)) {
+                        window.alert("Cartão de crédito invalido.");
+                    } else {
+                        const newOrder = new Order ({
+                            date_of_delivery: deliveryDate.toISOString().slice(0, 10),
+                            date_of_purchase: today.toISOString().slice(0, 10),
+                            payment_method: 0,
+                            product: localStorage.getItem("currentProduct"),
+                            user: localStorage.getItem("currentUser")
+                        });
+
+                        addOrder(newOrder);
+                    }
+                } else if (paymentOption == 1) {
+                    window.alert("Método de pagamento ainda não está disponível. Por favor selecione outro.");
+                } else {
+                    window.alert("Por favor, selecione um método de pagamento.");
+                }
+            });
         });
 
         bankSlipButton.addEventListener("mouseover", function () {
@@ -195,11 +295,39 @@ function getCurrentUser() {
         const freightContent = document.createElement("div");
         freightContent.className = "freight-content";
 
+        const deliveryForm = document.createElement("form");
+        deliveryForm.style = "margin: 40px 60px 20px;";
+
+        const defaultAddressOptionBox = document.createElement("div");
+        defaultAddressOptionBox.className = "address-option-box";
+        const defaultAddressOptionInput = document.createElement("input");
+        defaultAddressOptionInput.type = "radio";
+        defaultAddressOptionInput.name = "address-option";
+        defaultAddressOptionInput.id = "default-address-option-input";
+        defaultAddressOptionInput.value = "default-address-option-input";
+        const defaultAddressOptionLabel = document.createElement("label");
+        defaultAddressOptionLabel.id = "default-address-option-label";
+        defaultAddressOptionLabel.innerHTML = "Endereço padrão: ";
+        defaultAddressOptionLabel.for = defaultAddressOptionInput.id;
+
+        const otherAddressOptionBox = document.createElement("div");
+        otherAddressOptionBox.className = "address-option-box";
+        const otherAddressOptionInput = document.createElement("input");
+        otherAddressOptionInput.type = "radio";
+        otherAddressOptionInput.name = "address-option";
+        otherAddressOptionInput.id = "other-address-option-input";
+        otherAddressOptionInput.value = "other-address-option-input";
+        otherAddressOptionInput.checked = true;
+        const otherAddressOptionLabel = document.createElement("label");
+        otherAddressOptionLabel.id = "other-address-option-label";
+        otherAddressOptionLabel.innerHTML = "Outro endereço:";
+        otherAddressOptionLabel.for = otherAddressOptionInput.id;
+
         const addressForm = document.createElement("form");
+        addressForm.className = "address-form";
 
         const streetBox = document.createElement("div");
         streetBox.className = "address-box street-box";
-        streetBox.style = "margin-top: 60px;";
         const streetLabel = document.createElement("label");
         streetLabel.className = "address-label street-label";
         streetLabel.innerHTML = "Logradouro:";
@@ -260,7 +388,7 @@ function getCurrentUser() {
 
         const zipCodeBox = document.createElement("div");
         zipCodeBox.className = "address-box zip-code-box";
-        zipCodeBox.style = "margin-bottom: 60px;";
+        /* zipCodeBox.style = "margin-bottom: 60px;"; */
         const zipCodeLabel = document.createElement("label");
         zipCodeLabel.className = "address-label zip-code-label";
         zipCodeLabel.innerHTML = "CEP:";
@@ -303,6 +431,13 @@ function getCurrentUser() {
             }
         });
 
+        const calculateFreightBox = document.createElement("div");
+        calculateFreightBox.className = "calculate-freight-box";
+        const calculateFreightButton = document.createElement("button");
+        calculateFreightButton.className = "calculate-freight-button";
+        calculateFreightButton.innerHTML = "Calcular frete";
+        calculateFreightBox.appendChild(calculateFreightButton);
+
         const freightBoxBottom = document.createElement("div");
         freightBoxBottom.className = "freight-box-bottom";
 
@@ -316,10 +451,9 @@ function getCurrentUser() {
         firstFreightOptionTitle.innerHTML = `Transportadora "A mais rápida"`;
         const firstFreightOptionTime = document.createElement("p");
         firstFreightOptionTime.className = "first-freight-option-time";
-        firstFreightOptionTime.innerHTML = "Tempo aproximado: x dias";
+        firstFreightOptionTime.innerHTML = "Tempo aproximado:";
         const firstFreightOptionPrice = document.createElement("p");
         firstFreightOptionPrice.className = "first-freight-option-price";
-        firstFreightOptionPrice.innerHTML = "R$ 00,00";
         firstFreightOptionButton.appendChild(firstFreightOptionTitle);
         firstFreightOptionButton.appendChild(firstFreightOptionTime);
         firstFreightOptionButton.appendChild(firstFreightOptionPrice);
@@ -331,10 +465,9 @@ function getCurrentUser() {
         secondFreightOptionTitle.innerHTML = `Transportadora "A mais veloz"`;
         const secondFreightOptionTime = document.createElement("p");
         secondFreightOptionTime.className = "second-freight-option-time";
-        secondFreightOptionTime.innerHTML = "Tempo aproximado: y dias";
+        secondFreightOptionTime.innerHTML = "Tempo aproximado:";
         const secondFreightOptionPrice = document.createElement("p");
         secondFreightOptionPrice.className = "second-freight-option-price";
-        secondFreightOptionPrice.innerHTML = "R$ 00,00";
         secondFreightOptionButton.appendChild(secondFreightOptionTitle);
         secondFreightOptionButton.appendChild(secondFreightOptionTime);
         secondFreightOptionButton.appendChild(secondFreightOptionPrice);
@@ -346,10 +479,9 @@ function getCurrentUser() {
         thirdFreightOptionTitle.innerHTML = `Correios`;
         const thirdFreightOptionTime = document.createElement("p");
         thirdFreightOptionTime.className = "third-freight-option-time";
-        thirdFreightOptionTime.innerHTML = "Tempo aproximado: z dias";
+        thirdFreightOptionTime.innerHTML = "Tempo aproximado:";
         const thirdFreightOptionPrice = document.createElement("p");
         thirdFreightOptionPrice.className = "third-freight-option-price";
-        thirdFreightOptionPrice.innerHTML = "R$ 00,00";
         thirdFreightOptionButton.appendChild(thirdFreightOptionTitle);
         thirdFreightOptionButton.appendChild(thirdFreightOptionTime);
         thirdFreightOptionButton.appendChild(thirdFreightOptionPrice);
@@ -359,8 +491,16 @@ function getCurrentUser() {
         const chosenFreightOptionTitleText = document.createElement("p");
         chosenFreightOptionTitleText.className = "chosen-freight-option-title-text";
         chosenFreightOptionTitleText.innerHTML = "Escolha a opção de frete de sua preferência.";
+        chosenFreightOptionTitle.appendChild(chosenFreightOptionTitleText);
 
         freightBox.appendChild(freightOptionsTitle);
+        defaultAddressOptionBox.appendChild(defaultAddressOptionInput);
+        defaultAddressOptionBox.appendChild(defaultAddressOptionLabel);
+        otherAddressOptionBox.appendChild(otherAddressOptionInput);
+        otherAddressOptionBox.appendChild(otherAddressOptionLabel);
+        deliveryForm.appendChild(defaultAddressOptionBox);
+        deliveryForm.appendChild(otherAddressOptionBox);
+        freightContent.appendChild(deliveryForm);
         addressForm.appendChild(streetBox);
         addressForm.appendChild(houseNumberBox);
         addressForm.appendChild(buildingNameBox);
@@ -369,8 +509,8 @@ function getCurrentUser() {
         addressForm.appendChild(stateBox);
         addressForm.appendChild(zipCodeBox);
         freightContent.appendChild(addressForm);
+        freightContent.appendChild(calculateFreightBox);
         freightBox.appendChild(freightContent);
-        chosenFreightOptionTitle.appendChild(chosenFreightOptionTitleText);
         freightOptionsButtons.appendChild(firstFreightOptionButton);
         freightOptionsButtons.appendChild(secondFreightOptionButton);
         freightOptionsButtons.appendChild(thirdFreightOptionButton);
@@ -380,8 +520,259 @@ function getCurrentUser() {
         outerFreightBox.appendChild(freightBox);
         purchaseDiv.appendChild(outerFreightBox);
 
+        loadCurrentAddressFromCurrentUser(defaultAddressOptionLabel);
+
         confirmationButtonBox.style = "height: fit-content;";
         confirmationButton.style.visibility = "visible";
+
+        firstFreightOptionButton.addEventListener("click", function () {
+            secondFreightOptionButton.style.backgroundColor = "#dedede";
+            thirdFreightOptionButton.style.backgroundColor = "#dedede";
+
+            if (isFreightPriceCalculated) {
+                firstFreightOptionButton.style.backgroundColor = "#888888";
+                freightOption = 1;
+                chosenFreightOptionTitleText.innerHTML = `Opção escolhida: Transportadora "A mais rápida"`;
+            }
+        });
+
+        secondFreightOptionButton.addEventListener("click", function () {
+            firstFreightOptionButton.style.backgroundColor = "#dedede";
+            thirdFreightOptionButton.style.backgroundColor = "#dedede";
+
+            if (isFreightPriceCalculated) {
+                secondFreightOptionButton.style.backgroundColor = "#888888";
+                freightOption = 2;
+                chosenFreightOptionTitleText.innerHTML = `Opção escolhida: Transportadora "A mais veloz"`;
+            }
+        });
+
+        thirdFreightOptionButton.addEventListener("click", function () {
+            firstFreightOptionButton.style.backgroundColor = "#dedede";
+            secondFreightOptionButton.style.backgroundColor = "#dedede";
+
+            if (isFreightPriceCalculated) {
+                thirdFreightOptionButton.style.backgroundColor = "#888888";
+                freightOption = 3;
+                chosenFreightOptionTitleText.innerHTML = `Opção escolhida: Correios`;
+            }
+        });
+
+        defaultAddressOptionInput.addEventListener("change", function () {
+            freightContent.removeChild(addressForm);
+            freightContent.removeChild(calculateFreightBox);
+
+            deliveryForm.style = "margin: 40px 60px 40px;";
+
+            let destinationPlacePromise = fetch(`${path}user.json`)
+                .then((response) => response.json())
+                .then((users) => {
+                    let a = fetch(`${path}address.json`)
+                        .then((response) => response.json())
+                        .then((addresses) => {
+                            let b = fetch(`https://nominatim.openstreetmap.org/search?format=json&street=${addresses[users[localStorage.getItem("currentUser")].default_address].street}&city=${addresses[users[localStorage.getItem("currentUser")].default_address].city}&state=${addresses[users[localStorage.getItem("currentUser")].default_address].state}&country=Brazil`)
+                                .then((response) => response.json())
+                                .then((response) => {
+                                    return [parseFloat(response[0].lat), parseFloat(response[0].lon)];
+                                });
+
+                            return b;
+                        });
+
+                    return a;
+                });
+
+            let finalPromise = Promise.all([originPlacePromise, destinationPlacePromise]).then(([result1, result2]) => {
+                return [result1, result2];
+            });
+
+            finalPromise
+                .then((result) => {
+                    fetch(`http://router.project-osrm.org/route/v1/driving/${result[0][1]},${result[0][0]};${result[1][1]},${result[1][0]}?overview=false`)
+                        .then((response) => response.json())
+                        .then((response) => {
+                            let correiosTimeMultiplierParameter = 5.25;
+
+                            let transDuration1 = (response.routes[0].duration / 60 / 60) * (correiosTimeMultiplierParameter / 2.25);
+                            let transDuration2 = (response.routes[0].duration / 60 / 60) * (correiosTimeMultiplierParameter / 1.75);
+                            let correiosDuration = (response.routes[0].duration / 60 / 60) * correiosTimeMultiplierParameter;
+
+                            let correiosCostDivisorParameter = 172000;
+
+                            let transCost1 = 22.0;
+                            let transCost2 = 22.0;
+                            let correiosCost = 22.0;
+
+                            transCost1 += response.routes[0].distance / (correiosCostDivisorParameter / 2.25);
+                            transCost2 += response.routes[0].distance / (correiosCostDivisorParameter / 1.75);
+                            correiosCost += response.routes[0].distance / correiosCostDivisorParameter;
+
+                            let boxCost = 8.4;
+
+                            transCost1 += boxCost;
+                            transCost2 += boxCost;
+                            correiosCost += boxCost;
+
+                            if (transDuration1 < 23.0) {
+                                firstFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 1 dia útil.`;
+                                firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                t1t = 1;
+                            } else if (transDuration1 < 47.0) {
+                                firstFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 2 dias úteis.`;
+                                firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                t1t = 2;
+                            } else {
+                                firstFreightOptionTime.innerHTML = `Tempo aproximado de ${(transDuration1 / 24).toFixed(0)} dias úteis.`;
+                                firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                t1t = (transDuration1 / 24).toFixed(0);
+                            }
+
+                            t1p = transCost1;
+
+                            if (transDuration2 < 23.0) {
+                                secondFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 1 dia útil.`;
+                                secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                t2t = 1;
+                            } else if (transDuration2 < 47.0) {
+                                secondFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 2 dias úteis.`;
+                                secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                t2t = 2;
+                            } else {
+                                secondFreightOptionTime.innerHTML = `Tempo aproximado de ${(transDuration2 / 24).toFixed(0)} dias úteis.`;
+                                secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                t2t = (transDuration2 / 24).toFixed(0);
+                            }
+
+                            t2p = transCost2;
+
+                            if (correiosDuration / 24 < 5.0) {
+                                thirdFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 5 dias úteis.`;
+                                thirdFreightOptionPrice.innerHTML = `Valor: ${correiosCost.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                ct = 5;
+                            } else {
+                                thirdFreightOptionTime.innerHTML = `Tempo aproximado de ${(correiosDuration / 24).toFixed(0)} dias úteis.`;
+                                thirdFreightOptionPrice.innerHTML = `Valor: ${correiosCost.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                ct = (correiosDuration / 24).toFixed(0);
+                            }
+
+                            cp = correiosCost;
+
+                            isFreightPriceCalculated = true;
+                        })
+                        .catch((e) => {
+                            console.log(`An error occured trying to the distance between the two points: ${e}`);
+                        });
+                })
+                .catch((error) => {
+                    console.error("Erro ao executar promise3:", error);
+                });
+        });
+
+        otherAddressOptionInput.addEventListener("change", function () {
+            freightContent.appendChild(addressForm);
+            freightContent.appendChild(calculateFreightBox);
+
+            deliveryForm.style = "margin: 40px 60px 20px;";
+        });
+
+        calculateFreightButton.addEventListener("click", function () {
+            if (!streetInput.value || !cityInput.value || !stateInput.value || !zipCodeInput.value) {
+            } else {
+                let destinationPlacePromise = fetch(`https://nominatim.openstreetmap.org/search?format=json&street=${streetInput.value}&city=${cityInput.value}&state=${stateInput.value}&country=Brazil`)
+                    .then((response) => response.json())
+                    .then((response) => {
+                        return [parseFloat(response[0].lat), parseFloat(response[0].lon)];
+                    })
+                    .catch((e) => {
+                        console.log(`An error occured trying to find second latitude and longitude: ${e}`);
+                    });
+
+                let finalPromise = Promise.all([originPlacePromise, destinationPlacePromise]).then(([result1, result2]) => {
+                    return [result1, result2];
+                });
+
+                finalPromise
+                    .then((result) => {
+                        fetch(`http://router.project-osrm.org/route/v1/driving/${result[0][1]},${result[0][0]};${result[1][1]},${result[1][0]}?overview=false`)
+                            .then((response) => response.json())
+                            .then((response) => {
+                                let correiosTimeMultiplierParameter = 5.25;
+
+                                let transDuration1 = (response.routes[0].duration / 60 / 60) * (correiosTimeMultiplierParameter / 2.25);
+                                let transDuration2 = (response.routes[0].duration / 60 / 60) * (correiosTimeMultiplierParameter / 1.75);
+                                let correiosDuration = (response.routes[0].duration / 60 / 60) * correiosTimeMultiplierParameter;
+
+                                let correiosCostDivisorParameter = 172000;
+
+                                let transCost1 = 22.0;
+                                let transCost2 = 22.0;
+                                let correiosCost = 22.0;
+
+                                transCost1 += response.routes[0].distance / (correiosCostDivisorParameter / 2.25);
+                                transCost2 += response.routes[0].distance / (correiosCostDivisorParameter / 1.75);
+                                correiosCost += response.routes[0].distance / correiosCostDivisorParameter;
+
+                                let boxCost = 8.4;
+
+                                transCost1 += boxCost;
+                                transCost2 += boxCost;
+                                correiosCost += boxCost;
+
+                                if (transDuration1 < 23.0) {
+                                    firstFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 1 dia útil.`;
+                                    firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                    t1t = 1;
+                                } else if (transDuration1 < 47.0) {
+                                    firstFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 2 dias úteis.`;
+                                    firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                    t1t = 2;
+                                } else {
+                                    firstFreightOptionTime.innerHTML = `Tempo aproximado de ${(transDuration1 / 24).toFixed(0)} dias úteis.`;
+                                    firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                    t1t = (transDuration1 / 24).toFixed(0);
+                                }
+
+                                t1p = transCost1;
+
+                                if (transDuration2 < 23.0) {
+                                    secondFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 1 dia útil.`;
+                                    secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                    t2t = 1;
+                                } else if (transDuration2 < 47.0) {
+                                    secondFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 2 dias úteis.`;
+                                    secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                    t2t = 2;
+                                } else {
+                                    secondFreightOptionTime.innerHTML = `Tempo aproximado de ${(transDuration2 / 24).toFixed(0)} dias úteis.`;
+                                    secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                    t2t = (transDuration2 / 24).toFixed(0);
+                                }
+
+                                t2p = transCost2;
+
+                                if (correiosDuration / 24 < 5.0) {
+                                    thirdFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 5 dias úteis.`;
+                                    thirdFreightOptionPrice.innerHTML = `Valor: ${correiosCost.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                    ct = 5;
+                                } else {
+                                    thirdFreightOptionTime.innerHTML = `Tempo aproximado de ${(correiosDuration / 24).toFixed(0)} dias úteis.`;
+                                    thirdFreightOptionPrice.innerHTML = `Valor: ${correiosCost.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+                                    ct = (correiosDuration / 24).toFixed(0);
+                                }
+
+                                cp = correiosCost;
+
+                                isFreightPriceCalculated = true;
+                            })
+                            .catch((e) => {
+                                console.log(`An error occured trying to the distance between the two points: ${e}`);
+                            });
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao executar promise3:", error);
+                    });
+            }
+        });
     } else {
         const noUserText = document.createElement("p");
         noUserText.className = "no-user-text";
@@ -443,6 +834,19 @@ function loadProductInformation(product) {
     const price = document.createElement("p");
     price.className = `price`;
     price.innerHTML = `${product.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
+    pp = product.price;
+
+    const origin = document.createElement("p");
+    origin.className = `origin`;
+    fetch(`${path}product.json`)
+        .then((response) => response.json())
+        .then((products) => {
+            let a = fetch(`${path}address.json`)
+                .then((response) => response.json())
+                .then((addresses) => {
+                    origin.innerHTML = `Origem do produto: ${addresses[products[localStorage.getItem("currentProduct")].origin_address].city} - ${addresses[products[localStorage.getItem("currentProduct")].origin_address].state}`;
+                });
+        });
 
     const productInfo = document.createElement("div");
     productInfo.className = "product-info";
@@ -451,7 +855,74 @@ function loadProductInformation(product) {
     productInfo.appendChild(name);
     productInfo.appendChild(description);
     productInfo.appendChild(price);
+    productInfo.appendChild(origin);
     productDiv.appendChild(productInfo);
+}
+
+function loadCurrentAddressFromCurrentUser(defaultAddressOptionLabel) {
+    fetch(`${path}user.json`)
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Network answer was not ok.");
+            }
+            return response.json();
+        })
+        .then((users) => {
+            fetch(`${path}address.json`)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Network answer was not ok.");
+                    }
+                    return response.json();
+                })
+                .then((addresses) => {
+                    defaultAddressOptionLabel.innerHTML += `${addresses[users[localStorage.getItem("currentUser")].default_address].street}, `;
+
+                    if (addresses[users[localStorage.getItem("currentUser")].default_address].house_number) {
+                        defaultAddressOptionLabel.innerHTML += `${addresses[users[localStorage.getItem("currentUser")].default_address].house_number}`;
+                    } else {
+                        defaultAddressOptionLabel.innerHTML += `s/n`;
+                    }
+
+                    if (addresses[users[localStorage.getItem("currentUser")].default_address].building_name) {
+                        defaultAddressOptionLabel.innerHTML += ` - ${addresses[users[localStorage.getItem("currentUser")].default_address].building_name}`;
+                    }
+
+                    if (addresses[users[localStorage.getItem("currentUser")].default_address].neighborhood) {
+                        defaultAddressOptionLabel.innerHTML += ` - ${addresses[users[localStorage.getItem("currentUser")].default_address].neighborhood}`;
+                    }
+
+                    if (addresses[users[localStorage.getItem("currentUser")].default_address].city) {
+                        defaultAddressOptionLabel.innerHTML += ` - ${addresses[users[localStorage.getItem("currentUser")].default_address].city}`;
+                    }
+
+                    if (addresses[users[localStorage.getItem("currentUser")].default_address].state) {
+                        defaultAddressOptionLabel.innerHTML += ` - ${addresses[users[localStorage.getItem("currentUser")].default_address].state}`;
+                    }
+
+                    if (addresses[users[localStorage.getItem("currentUser")].default_address].zip_code) {
+                        defaultAddressOptionLabel.innerHTML += ` (${addresses[users[localStorage.getItem("currentUser")].default_address].zip_code.substring(0, 5)}-${addresses[users[localStorage.getItem("currentUser")].default_address].zip_code.substring(5, 8)})`;
+                    }
+                });
+        });
+}
+
+function addOrder(orderData) {
+    return fetch(path + "order.json", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error("Resposta de rede não foi ok");
+        }
+    }).catch((error) => {
+        console.error("Houve um problema ao adicionar o contato:", error);
+    }).finally(() => {
+        window.location.href = "../08_SuccessfulPage/index.html";
+    });
 }
 
 function getDigit(number) {
