@@ -15,11 +15,20 @@
 const path = "https://heros-shop-i-default-rtdb.firebaseio.com/";
 
 const accountButtons = document.getElementById("account-buttons");
+const profileLink = document.querySelector(".profile-link");
 
 /* const leftButton = document.getElementById("left-button");
 const rightButton = document.getElementById("right-button"); */
 
 document.addEventListener("DOMContentLoaded", getLoginStatus);
+
+document.addEventListener("DOMContentLoaded", function() {
+    if(localStorage.getItem("currentUser")){
+        profileLink.style = "visibility: visible;";
+    }else{
+        profileLink.style = "visibility: hidden;";
+    }
+});
 
 function getLoginStatus() {
     if(localStorage.getItem("currentUser")){

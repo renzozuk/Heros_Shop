@@ -613,11 +613,11 @@ function getCurrentUser() {
                             transCost2 += boxCost;
                             correiosCost += boxCost;
 
-                            if (transDuration1 < 23.0) {
+                            if (transDuration1 < 24.0) {
                                 firstFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 1 dia útil.`;
                                 firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
                                 t1t = 1;
-                            } else if (transDuration1 < 47.0) {
+                            } else if (transDuration1 < 48.0) {
                                 firstFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 2 dias úteis.`;
                                 firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
                                 t1t = 2;
@@ -629,11 +629,11 @@ function getCurrentUser() {
 
                             t1p = transCost1;
 
-                            if (transDuration2 < 23.0) {
+                            if (transDuration2 < 24.0) {
                                 secondFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 1 dia útil.`;
                                 secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
                                 t2t = 1;
-                            } else if (transDuration2 < 47.0) {
+                            } else if (transDuration2 < 48.0) {
                                 secondFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 2 dias úteis.`;
                                 secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
                                 t2t = 2;
@@ -718,11 +718,11 @@ function getCurrentUser() {
                                 transCost2 += boxCost;
                                 correiosCost += boxCost;
 
-                                if (transDuration1 < 23.0) {
+                                if (transDuration1 < 24.0) {
                                     firstFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 1 dia útil.`;
                                     firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
                                     t1t = 1;
-                                } else if (transDuration1 < 47.0) {
+                                } else if (transDuration1 < 48.0) {
                                     firstFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 2 dias úteis.`;
                                     firstFreightOptionPrice.innerHTML = `Valor: ${transCost1.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
                                     t1t = 2;
@@ -734,11 +734,11 @@ function getCurrentUser() {
 
                                 t1p = transCost1;
 
-                                if (transDuration2 < 23.0) {
+                                if (transDuration2 < 24.0) {
                                     secondFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 1 dia útil.`;
                                     secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
                                     t2t = 1;
-                                } else if (transDuration2 < 47.0) {
+                                } else if (transDuration2 < 48.0) {
                                     secondFreightOptionTime.innerHTML = `Tempo de entrega aproximado: 2 dias úteis.`;
                                     secondFreightOptionPrice.innerHTML = `Valor: ${transCost2.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}`;
                                     t2t = 2;
