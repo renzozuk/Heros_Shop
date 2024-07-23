@@ -271,7 +271,7 @@ document.getElementById('delete-button').addEventListener('click', async () => {
             firebase.auth().signOut()
                 .then(() => {
                     localStorage.clear();
-                    window.location.href = '../../01_Homepage/index.html';
+                    window.location.href = '../01_Homepage/index.html';
                 })
                 .catch((error) => {
                     console.error("Erro ao fazer logout:", error);
@@ -280,5 +280,57 @@ document.getElementById('delete-button').addEventListener('click', async () => {
         } catch (error) {
             console.error('Erro ao apagar a conta:', error);
         }
+    }
+});
+
+const zipCodeInput = document.getElementById("zip_code");
+
+zipCodeInput.addEventListener("input", function (e) {
+    const streetInput = document.getElementById("street");
+    const buildingNameInput = document.getElementById("building_name");
+    const neighborhoodInput = document.getElementById("neighborhood");
+    const cityInput = document.getElementById("city");
+    const stateInput = document.getElementById("state");
+
+    if (e.target.value.length >= 8) {
+        fetch(`https://viacep.com.br/ws/${zipCodeInput.value}/json`)
+            .then((response) => response.json())
+            .then((cepData) => {
+                if (cepData.logradouro) {
+                    streetInput.value = cepData.logradouro;
+                } else {
+                    streetInput.value = "";
+                }
+
+                if (cepData.complemento) {
+                    buildingNameInput.value = cepData.complemento;
+                } else {
+                    buildingNameInput.value = "";
+                }
+
+                if (cepData.bairro) {
+                    neighborhoodInput.value = cepData.bairro;
+                } else {
+                    neighborhoodInput.value = "";
+                }
+
+                if (cepData.localidade) {
+                    cityInput.value = cepData.localidade;
+                } else {
+                    cityInput.value = "";
+                }
+
+                if (cepData.uf) {
+                    stateInput.value = cepData.uf;
+                } else {
+                    stateInput.value = "";
+                }
+            });
+    } else {
+        streetInput.value = "";
+        buildingNameInput.value = "";
+        neighborhoodInput.value = "";
+        cityInput.value = "";
+        stateInput.value = "";
     }
 });
