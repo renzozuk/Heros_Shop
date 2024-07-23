@@ -163,7 +163,7 @@ img {
 .card-button, .bank-slip-button {
     width: 50%;
     height: 70px;
-    background-color: whitesmoke;
+    background-color: #dedede;
     border: 3px solid #ff2d00;
     border-bottom: 0;
 }
@@ -186,13 +186,14 @@ img {
 
 .freight-box-bottom {
     border: 3px solid #ff2d00;
+    border-top: 0;
     border-radius: 0 0 60px 60px;
     background-color: #ff2d00;
 }
 
 .first-freight-option-button, .third-freight-option-button {
     width: 33.33%;
-    background-color: whitesmoke;
+    background-color: #dedede;
 }
 
 .second-freight-option-button {
@@ -200,7 +201,7 @@ img {
     border: 3px solid #ff2d00;
     border-top: 0;
     border-bottom: 0;
-    background-color: whitesmoke;
+    background-color: #dedede;
 }
 
 .first-freight-option-title, .first-freight-option-time, .first-freight-option-price, .second-freight-option-title, .second-freight-option-time, .second-freight-option-price, .third-freight-option-title, .third-freight-option-time, .third-freight-option-price {
@@ -241,7 +242,7 @@ img {
 .payment-content, .freight-content {
     height: fit-content;
     border: 3px solid #ff2d00;
-    background-color: whitesmoke;
+    background-color: #dedede;
 }
 
 .payment-content {
@@ -250,10 +251,10 @@ img {
 }
 
 .freight-content {
-    border-bottom: 0;
-    display: flex;
+    /* border-bottom: 3px; */
+    /* display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: center; */
 }
 
 .no-user-text {
@@ -263,26 +264,26 @@ img {
     color: #000;
 }
 
-.card-box {
+.card-box, .address-box {
     margin: 20px 60px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-.owner-name-label, .card-number-label, .expiration-date-label, .cvv-label {
+.owner-name-label, .card-number-label, .expiration-date-label, .cvv-label, .address-label {
     margin: 5px;
 }
 
-.owner-name-input, .card-number-input, .expiration-date-input, .cvv-input {
+.owner-name-input, .card-number-input, .expiration-date-input, .cvv-input, .address-input {
     padding: 10px 15px;
     border-radius: 10px;
     border: none;
 }
 
-/* .owner-name-input:focus, .card-number-input:focus, .expiration-date-input:focus, .cvv-input:focus {
-    border: none;
-} */
+.cvv-input, .house-number-input, .zip-code-input {
+    width: 100px;
+}
 
 .confirmation-button-box {
     width: 100%;
@@ -307,7 +308,7 @@ img {
 
 .confirmation-button-box button:hover {
     background-color: #fc1414;
-    color: whitesmoke;
+    color: #dedede;
 }
 
 .container-footer {

@@ -115,6 +115,18 @@ function getCurrentUser() {
             cardNumberBox.appendChild(cardNumberLabel);
             cardNumberBox.appendChild(cardNumberInput);
 
+            cardNumberInput.addEventListener("input", function(e) {
+                if(cardNumberInput.value.length == 13 || cardNumberInput.value.length == 16 || cardNumberInput.value.length == 19){
+                    if(cardNumberInput.value.charAt(0) == "4" && isCardNumberValid(cardNumberInput.value)){
+                        console.log("Valid Visa number.");
+                    }else if(((parseInt(cardNumberInput.value.substring(0, 2)) >= 51 && parseInt(cardNumberInput.value.substring(0, 2)) <= 55) || (parseInt(cardNumberInput.value.substring(0, 4)) >= 2221 && parseInt(cardNumberInput.value.substring(0, 4)) <= 2720)) && isCardNumberValid(cardNumberInput.value)){
+                        console.log("Valid MasterCard number.");
+                    }else{
+                        console.log("Card number not valid.");
+                    }
+                }
+            });
+
             const expirationDateBox = document.createElement("div");
             expirationDateBox.className = "card-box";
             const expirationDateLabel = document.createElement("label");
@@ -186,64 +198,110 @@ function getCurrentUser() {
         const addressForm = document.createElement("form");
 
         const streetBox = document.createElement("div");
-        streetBox.className = "street-box";
+        streetBox.className = "address-box street-box";
+        streetBox.style = "margin-top: 60px;";
         const streetLabel = document.createElement("label");
-        streetLabel.className = "street-label";
-        streetLabel.innerHTML = "Logradouro:"
+        streetLabel.className = "address-label street-label";
+        streetLabel.innerHTML = "Logradouro:";
         const streetInput = document.createElement("input");
-        streetInput.className = "street-input";
+        streetInput.className = "address-input street-input";
         streetBox.appendChild(streetLabel);
         streetBox.appendChild(streetInput);
 
         const houseNumberBox = document.createElement("div");
-        houseNumberBox.className = "house-number-box";
+        houseNumberBox.className = "address-box house-number-box";
         const houseNumberLabel = document.createElement("label");
-        houseNumberLabel.className = "house-number-label";
-        houseNumberLabel.innerHTML = "Número:"
+        houseNumberLabel.className = "address-label house-number-label";
+        houseNumberLabel.innerHTML = "Número:";
         const houseNumberInput = document.createElement("input");
-        houseNumberInput.className = "house-number-input";
+        houseNumberInput.className = "address-input house-number-input";
         houseNumberBox.appendChild(houseNumberLabel);
         houseNumberBox.appendChild(houseNumberInput);
 
+        const buildingNameBox = document.createElement("div");
+        buildingNameBox.className = "address-box building-name-box";
+        const buildingNameLabel = document.createElement("label");
+        buildingNameLabel.className = "address-label building-name-label";
+        buildingNameLabel.innerHTML = "Complemento:";
+        const buildingNameInput = document.createElement("input");
+        buildingNameInput.className = "address-input building-name-input";
+        buildingNameBox.appendChild(buildingNameLabel);
+        buildingNameBox.appendChild(buildingNameInput);
+
         const neighborhoodBox = document.createElement("div");
-        neighborhoodBox.className = "neighborhood-box";
+        neighborhoodBox.className = "address-box neighborhood-box";
         const neighborhoodLabel = document.createElement("label");
-        neighborhoodLabel.className = "neighborhood-label";
-        neighborhoodLabel.innerHTML = "Bairro:"
+        neighborhoodLabel.className = "address-label neighborhood-label";
+        neighborhoodLabel.innerHTML = "Bairro:";
         const neighborhoodInput = document.createElement("input");
-        neighborhoodInput.className = "neighborhood-input";
+        neighborhoodInput.className = "address-input neighborhood-input";
         neighborhoodBox.appendChild(neighborhoodLabel);
         neighborhoodBox.appendChild(neighborhoodInput);
 
         const cityBox = document.createElement("div");
-        cityBox.className = "city-box";
+        cityBox.className = "address-box city-box";
         const cityLabel = document.createElement("label");
-        cityLabel.className = "city-label";
-        cityLabel.innerHTML = "Cidade:"
+        cityLabel.className = "address-label city-label";
+        cityLabel.innerHTML = "Cidade:";
         const cityInput = document.createElement("input");
-        cityInput.className = "city-input";
+        cityInput.className = "address-input city-input";
         cityBox.appendChild(cityLabel);
         cityBox.appendChild(cityInput);
 
         const stateBox = document.createElement("div");
-        stateBox.className = "state-box";
+        stateBox.className = "address-box state-box";
         const stateLabel = document.createElement("label");
-        stateLabel.className = "state-label";
-        stateLabel.innerHTML = "Estado:"
+        stateLabel.className = "address-label state-label";
+        stateLabel.innerHTML = "Estado:";
         const stateInput = document.createElement("input");
-        stateInput.className = "state-input";
+        stateInput.className = "address-input state-input";
         stateBox.appendChild(stateLabel);
         stateBox.appendChild(stateInput);
 
         const zipCodeBox = document.createElement("div");
-        zipCodeBox.className = "zip-code-box";
+        zipCodeBox.className = "address-box zip-code-box";
+        zipCodeBox.style = "margin-bottom: 60px;";
         const zipCodeLabel = document.createElement("label");
-        zipCodeLabel.className = "zip-code-label";
-        zipCodeLabel.innerHTML = "CEP:"
+        zipCodeLabel.className = "address-label zip-code-label";
+        zipCodeLabel.innerHTML = "CEP:";
         const zipCodeInput = document.createElement("input");
-        zipCodeInput.className = "zip-code-input";
+        zipCodeInput.className = "address-input zip-code-input";
         zipCodeBox.appendChild(zipCodeLabel);
         zipCodeBox.appendChild(zipCodeInput);
+
+        zipCodeInput.addEventListener("input", function (e) {
+            if (e.target.value.length >= 8) {
+                fetch(`https://viacep.com.br/ws/${zipCodeInput.value}/json`)
+                    .then((response) => response.json())
+                    .then((cepData) => {
+                        if (cepData.logradouro) {
+                            streetInput.value = cepData.logradouro;
+                        }
+
+                        if (cepData.complemento) {
+                            buildingNameInput.value = cepData.complemento;
+                        }
+
+                        if (cepData.bairro) {
+                            neighborhoodInput.value = cepData.bairro;
+                        }
+
+                        if (cepData.localidade) {
+                            cityInput.value = cepData.localidade;
+                        }
+
+                        if (cepData.uf) {
+                            stateInput.value = cepData.uf;
+                        }
+                    });
+            } else {
+                streetInput.value = "";
+                buildingNameInput.value = "";
+                neighborhoodInput.value = "";
+                cityInput.value = "";
+                stateInput.value = "";
+            }
+        });
 
         const freightBoxBottom = document.createElement("div");
         freightBoxBottom.className = "freight-box-bottom";
@@ -305,6 +363,7 @@ function getCurrentUser() {
         freightBox.appendChild(freightOptionsTitle);
         addressForm.appendChild(streetBox);
         addressForm.appendChild(houseNumberBox);
+        addressForm.appendChild(buildingNameBox);
         addressForm.appendChild(neighborhoodBox);
         addressForm.appendChild(cityBox);
         addressForm.appendChild(stateBox);
@@ -393,4 +452,45 @@ function loadProductInformation(product) {
     productInfo.appendChild(description);
     productInfo.appendChild(price);
     productDiv.appendChild(productInfo);
+}
+
+function getDigit(number) {
+    if (number < 9) return number;
+    return Math.floor(number / 10) + (number % 10);
+}
+
+function getSize(d) {
+    let num = d.toString();
+    return num.length;
+}
+
+function getPrefix(number, k) {
+    if (getSize(number) > k) {
+        let num = number.toString();
+        return parseInt(num.substring(0, k));
+    }
+    return number;
+}
+
+function prefixMatched(number, d) {
+    return getPrefix(number, getSize(d)) == d;
+}
+
+function sumOfDoubleEvenPlace(number) {
+    let sum = 0;
+    let num = number.toString();
+    for (let i = getSize(number) - 2; i >= 0; i -= 2) sum += getDigit((num.charCodeAt(i) - "0".charCodeAt(0)) * 2);
+
+    return sum;
+}
+
+function sumOfOddPlace(number) {
+    let sum = 0;
+    let num = number.toString();
+    for (let i = getSize(number) - 1; i >= 0; i -= 2) sum += num.charCodeAt(i) - "0".charCodeAt(0);
+    return sum;
+}
+
+function isCardNumberValid(number) {
+    return getSize(number) >= 13 && getSize(number) <= 16 && (prefixMatched(number, 4) || prefixMatched(number, 5) || prefixMatched(number, 37) || prefixMatched(number, 6)) && (sumOfDoubleEvenPlace(number) + sumOfOddPlace(number)) % 10 == 0;
 }
