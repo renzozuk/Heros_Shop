@@ -104,6 +104,7 @@ input {
     display: flex;
     flex-direction: row;
     justify-content: center;
+    gap: 4rem;
 }
 
 .submit-button button {
@@ -120,6 +121,14 @@ input {
 .submit-button button:hover {
     background-color: #fc1414;
     color: whitesmoke;
+}
+
+#delete-button {
+    background-color: #ff4040;
+}
+
+#delete-button:hover{
+    background-color: #ff4f4f;
 }
 
 footer {

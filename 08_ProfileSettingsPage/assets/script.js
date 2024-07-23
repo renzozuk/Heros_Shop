@@ -71,7 +71,6 @@ async function fetchAddressData(addressId) {
         const response = await fetch(`${path}/address/${addressId}.json`);
         const data = await response.json();
 
-        console.log(addressId);
         if (data) {
             return new Address(data);
         } else {
@@ -202,5 +201,84 @@ document.getElementById('submit-button').addEventListener('click', async (event)
         }
     } else {
         console.warn("Nenhum usuário autenticado encontrado.");
+    }
+});
+
+const cepInput = document.getElementById('zip_code');
+cepInput.addEventListener('blur', () => {
+    const cep = cepInput.value.replace(/\D/g, '');
+    if (cep.length === 8) {
+        buscarEndereco(cep);
+    } else {
+        alert('CEP inválido!');
+    }
+});
+
+async function buscarEndereco(cep) {
+    try {
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        const data = await response.json();
+
+        if (data.erro) {
+            throw new Error('CEP não encontrado');
+        }
+
+        fillFormWithAddressData(data);
+    } catch (error) {
+        console.error('Erro ao buscar endereço:', error);
+        alert('Erro ao buscar endereço. Verifique o CEP e tente novamente.');
+    }
+}
+
+function fillFormWithAddressData(data) {
+    document.getElementById('street').value = data.logradouro;
+    document.getElementById('neighborhood').value = data.bairro;
+    document.getElementById('city').value = data.localidade;
+    document.getElementById('state').value = data.uf;
+}
+
+document.getElementById('delete-button').addEventListener('click', async () => {
+    const password_input = document.getElementById('old_password').value;
+    if (password_input == 0) {
+        alert('Por favor, insira sua senha para confirmar as alterações.');
+        return;
+    }
+
+    if (confirm('Tem certeza que deseja apagar sua conta permanentemente?')) {
+        const auth_user = await getUser();
+        try {
+            const credential = firebase.auth.EmailAuthProvider.credential(auth_user.email, password_input);
+            await auth_user.reauthenticateWithCredential(credential);
+        }
+        catch (error) {
+            alert("Senha incorreta, tente novamente.");
+            return;
+        }
+        const user_data = await fetchUserData(auth_user);
+        const user_uid = auth_user.uid;
+        const address_uid = user_data.default_address;
+        console.log("Here: ", address_uid);
+        try {
+            await auth_user.delete();
+
+            const addressURL = `${path}/address/${address_uid}.json`;
+            await fetch(addressURL, { method: 'DELETE' });
+
+            const userURL = `${path}/user/${user_uid}.json`;
+            await fetch(userURL, { method: 'DELETE' });
+
+
+            firebase.auth().signOut()
+                .then(() => {
+                    localStorage.clear();
+                    window.location.href = '../../01_Homepage/index.html';
+                })
+                .catch((error) => {
+                    console.error("Erro ao fazer logout:", error);
+                });
+
+        } catch (error) {
+            console.error('Erro ao apagar a conta:', error);
+        }
     }
 });
