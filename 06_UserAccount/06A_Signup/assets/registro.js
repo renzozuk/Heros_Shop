@@ -26,6 +26,14 @@ document.addEventListener("DOMContentLoaded", function() {
         const cpf = signupForm.cpf.value;
         const telefone = signupForm.telefone.value;
         const foto = signupForm.foto.value;
+        const buildingName = signupForm.building_name.value;
+        const houseNumber = signupForm.house_number.value;
+        const street = signupForm.street.value;
+        const neighborhood = signupForm.neighborhood.value;
+        const city = signupForm.city.value;
+        const state = signupForm.state.value;
+        const country = signupForm.country.value;
+        const zipCode = signupForm.zip_code.value;
 
         // Registrar usuário no Firebase Authentication
         firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -34,22 +42,55 @@ document.addEventListener("DOMContentLoaded", function() {
                 const user = userCredential.user;
                 const uid = user.uid; // Obter o UID do usuário
 
-                // Enviar informações do usuário para o Realtime Database
-                firebase.database().ref('user/' + uid).set({
-                    cpf: cpf,
-                    name: nome,
-                    phone_number: telefone,
-                    photo: foto
-                    // Adicione outros campos conforme necessário
-                })
-                .then(() => {
-                    // Redirecionar para a página inicial após o registro
-                    window.location.href = "../../01_Homepage/index.html";
-                })
-                .catch((error) => {
-                    console.error("Erro ao enviar informações do usuário para o Realtime Database: ", error);
-                    alert("Erro ao criar conta. Por favor, tente novamente mais tarde.");
-                });
+                // Criar um objeto com os dados do endereço
+                const addressData = {
+                    building_name: buildingName,
+                    house_number: houseNumber,
+                    street: street,
+                    neighborhood: neighborhood,
+                    city: city,
+                    state: state,
+                    country: country,
+                    zip_code: zipCode
+                };
+
+                // Referenciar o caminho correto para a coleção "address" no Realtime Database
+                const addressRef = firebase.database().ref('address');
+
+                // Adicionar os dados do endereço ao Realtime Database
+                addressRef.push(addressData)
+                    .then((addressSnapshot) => {
+                        // Obter o ID do endereço criado
+                        const addressId = addressSnapshot.key;
+
+                        // Atualizar os dados do usuário com o ID do endereço padrão
+                        const userData = {
+                            cpf: cpf,
+                            name: nome,
+                            phone_number: telefone,
+                            foto: foto,
+                            default_address: addressId // Vincular o ID do endereço ao usuário
+                        };
+
+                        // Referenciar o caminho correto para a coleção "users" no Realtime Database
+                        const userRef = firebase.database().ref('user/' + uid);
+
+                        // Adicionar os dados do usuário ao Realtime Database
+                        userRef.set(userData)
+                            .then(() => {
+                                // Redirecionar para a página inicial após o registro
+                                window.location.href = "../../01_Homepage/index.html";
+                            })
+                            .catch((error) => {
+                                console.error("Erro ao enviar informações do usuário para o Realtime Database: ", error);
+                                alert("Erro ao criar conta. Por favor, tente novamente mais tarde.");
+                            });
+
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao enviar informações do endereço para o Realtime Database: ", error);
+                        alert("Erro ao criar conta. Por favor, tente novamente mais tarde.");
+                    });
 
             })
             .catch((error) => {
