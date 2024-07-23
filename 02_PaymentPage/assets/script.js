@@ -921,7 +921,7 @@ function addOrder(orderData) {
     }).catch((error) => {
         console.error("Houve um problema ao adicionar o contato:", error);
     }).finally(() => {
-        window.location.href = "../08_SuccessfulPage/index.html";
+        window.location.href = "../09_SuccessfulPage/index.html";
     });
 }
 
