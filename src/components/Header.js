@@ -28,7 +28,7 @@ export default function Header() {
                     {localStorage.getItem("currentUser") && <li className="header-navbar-item"><Link className="header-navbar-link" to="#"><i class="fas fa-user"></i> Meus Pedidos</Link></li>}
                 </ul>
                 <ul className="header-navbar-section">
-                    <li className="header-navbar-item">Contato: +55(84)99999-9999 | contato@heroshop.com</li>
+                    <li className="header-navbar-item">Contato: +55 84 99999-9999 | contato@heroshop.com</li>
                 </ul>
             </nav>
         </div>
