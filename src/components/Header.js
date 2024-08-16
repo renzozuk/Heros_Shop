@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import "./Header.css";
 
 export default function Header() {
@@ -19,7 +20,7 @@ export default function Header() {
             <img className="banner-image" src={screenWidth > 1250 ? "./banner.png" : "./banner_portrait.png"}></img>
             <nav className="header-navbar">
                 <ul className="header-navbar-section">
-                    <li className="header-navbar-item"><a className="header-navbar-link" href="#" target="_parent">Home</a></li>
+                    <li className="header-navbar-item"><Link className="header-navbar-link" to="/">Home</Link></li>
                     <li className="header-navbar-item"><a className="header-navbar-link" href="#" target="_parent">Action Figures</a></li>
                     <li className="header-navbar-item"><a className="header-navbar-link" href="#" target="_parent">Cosplay</a></li>
                     <li className="header-navbar-item"><a className="header-navbar-link" href="#" target="_parent">Diversos</a></li>
