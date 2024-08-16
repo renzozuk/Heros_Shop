@@ -20,12 +20,12 @@ export default function Header() {
             <img className="banner-image" src={screenWidth > 1250 ? "./banner.png" : "./banner_portrait.png"}></img>
             <nav className="header-navbar">
                 <ul className="header-navbar-section">
-                    <li className="header-navbar-item"><Link className="header-navbar-link" to="/">Home</Link></li>
-                    <li className="header-navbar-item"><a className="header-navbar-link" href="#" target="_parent">Action Figures</a></li>
-                    <li className="header-navbar-item"><a className="header-navbar-link" href="#" target="_parent">Cosplay</a></li>
-                    <li className="header-navbar-item"><a className="header-navbar-link" href="#" target="_parent">Diversos</a></li>
-                    {localStorage.getItem("currentUser") && <li className="header-navbar-item"><a className="header-navbar-link" href="#" target="_parent"><i class="fas fa-user"></i> Meu Perfil</a></li>}
-                    {localStorage.getItem("currentUser") && <li className="header-navbar-item"><a className="header-navbar-link" href="#" target="_parent"><i class="fas fa-user"></i> Meus Pedidos</a></li>}
+                    <li className="header-navbar-item"><Link className="header-navbar-link" to="/" >Home</Link></li>
+                    <li className="header-navbar-item"><Link className="header-navbar-link" to="/departments/action_figures">Action Figures</Link></li>
+                    <li className="header-navbar-item"><Link className="header-navbar-link" to="/departments/cosplay">Cosplay</Link></li>
+                    <li className="header-navbar-item"><Link className="header-navbar-link" to="/departments/diversos">Diversos</Link></li>
+                    {localStorage.getItem("currentUser") && <li className="header-navbar-item"><Link className="header-navbar-link" to="#"><i class="fas fa-user"></i> Meu Perfil</Link></li>}
+                    {localStorage.getItem("currentUser") && <li className="header-navbar-item"><Link className="header-navbar-link" to="#"><i class="fas fa-user"></i> Meus Pedidos</Link></li>}
                 </ul>
                 <ul className="header-navbar-section">
                     <li className="header-navbar-item">Contato: +55(84)99999-9999 | contato@heroshop.com</li>

@@ -1,11 +1,11 @@
-/* import { useParams } from "react-router-dom"; */
+import { useParams } from "react-router-dom";
 
 const Department = () => {
-    /* const category = useParams(); */
+    const { category } = useParams();
 
     return (
         <div>
-            <h2>Department</h2>
+            <h2>Department: {category}</h2>
         </div>
     );
 }
