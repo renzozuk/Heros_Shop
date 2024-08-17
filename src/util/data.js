@@ -12,8 +12,10 @@ class Product {
 
 const path = "https://heros-shop-i-default-rtdb.firebaseio.com/";
 
-export default function loadProducts() {
-    return fetch(`${path}product.json`)
+function loadProducts(category) {
+    return fetch(`${path}product.json`, {
+        method: "GET",
+    })
         .then((response) => {
             if (!response.ok) {
                 throw new Error("Network answer was not ok.");
@@ -24,19 +26,23 @@ export default function loadProducts() {
             const productsList = [];
 
             for (let key in products) {
-                const product = new Product({
-                    id: key,
-                    name: products[key].name,
-                    description: products[key].description,
-                    price: products[key].price,
-                    photo: products[key].photo,
-                    category: products[key].category,
-                    origin_address: products[key].origin_address
-                });
+                if (products[key].category == category || !category) {
+                    const product = new Product({
+                        id: key,
+                        name: products[key].name,
+                        description: products[key].description,
+                        price: products[key].price,
+                        photo: products[key].photo,
+                        category: products[key].category,
+                        origin_address: products[key].origin_address,
+                    });
 
-                productsList.push(product);
+                    productsList.push(product);
+                }
             }
 
             return productsList;
         });
 }
+
+export { loadProducts };

@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import App from "./App";
-import Homepage from "./pages/Homepage";
 import Department from "./pages/Department";
 import ErrorPage from "./pages/ErrorPage";
 import reportWebVitals from "./reportWebVitals";
@@ -16,7 +15,7 @@ const router = createBrowserRouter([
         children: [
             {
                 path: "/",
-                element: <Homepage />
+                element: <Department />
             },
             {
                 path: "/departments/:category",
