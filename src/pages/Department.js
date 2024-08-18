@@ -13,14 +13,17 @@ const Department = () => {
 
     useEffect(() => {
         loadData();
-        document.title = category ? `Hero´s Shop - ${capitalizeSentence(category.replace("_", " "))}` : "Hero´s Shop";
-        updateTitle(category ? capitalizeSentence(category.replace("_", " ")) : "Produtos em Destaque");
     });
 
     const loadData = () => {
-        loadProducts(category).then((productsData) => {
-            setProducts(productsData);
-        });
+        loadProducts(category)
+            .then((productsData) => {
+                setProducts(productsData);
+            })
+            .finally(() => {
+                document.title = category ? `Hero´s Shop - ${capitalizeSentence(category.replace("_", " "))}` : "Hero´s Shop";
+                updateTitle(category ? capitalizeSentence(category.replace("_", " ")) : "Produtos em Destaque");
+            });
     };
 
     return (
@@ -30,6 +33,6 @@ const Department = () => {
             ))}
         </div>
     );
-}
+};
 
 export default Department;

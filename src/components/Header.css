@@ -21,6 +21,13 @@
 }
 
 @media (max-width: 1250px) {
+    .account-buttons {
+        margin-bottom: 0;
+        left: 0;
+        right: 0;
+        margin: 15px auto 0;
+    }
+
     .header-navbar, .header-navbar-section {
         flex-direction: column;
     }
@@ -35,17 +42,30 @@
 }
 
 @media (min-width: 1250px) {
+    .account-buttons {
+        top: 20px;
+        right: 35px;
+    }
+
     .header-navbar, .header-navbar-section {
         flex-direction: row;
     }
 
     .header-navbar-section {
-        padding: 5px;
+        padding: 10px 5px;
     }
 
     .header-navbar-item {
         margin: auto 15px;
     }
+}
+
+.account-buttons {
+    width: 270px;
+    height: 60px;
+    position: absolute;
+    display: flex;
+    flex-direction: row;
 }
 
 .header-navbar {
@@ -65,10 +85,16 @@
 }
 
 .header-navbar-link {
+    display: flex;
+    flex-direction: row;
     text-decoration: none;
     color: #ffffff;
 }
 
 .header-navbar-link:hover {
     color: #ff2d00;
+}
+
+.header-navbar-link-text {
+    margin: 0 auto;
 }

@@ -1,0 +1,38 @@
+.account-button {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #000000;
+    border: #ffffff;
+    border-style: inset;
+}
+
+.left-button {
+    width: 60%;
+    border-radius: 30px 0 0 30px;
+}
+
+.right-button {
+    width: 40%;
+    border-radius: 0 30px 30px 0;
+    border-left: 0;
+}
+
+.inner-account-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.fas {
+    margin-right: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.greeting-text {
+    color: #ffffff;
+}

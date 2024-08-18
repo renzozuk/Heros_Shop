@@ -5,7 +5,7 @@ import Footer from "./components/Footer.js";
 import "./App.css";
 
 export default function App() {
-    const [title, setTitle] = useState("Title");
+    const [title, setTitle] = useState("Carregando...");
 
     const updateTitle = (title) => {
         setTitle(title);
