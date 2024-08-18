@@ -5,6 +5,7 @@ import "./index.css";
 import App from "./App";
 import Department from "./pages/Department";
 import ErrorPage from "./pages/ErrorPage";
+import Review from "./pages/Review";
 import reportWebVitals from "./reportWebVitals";
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {
                 path: "/departments/:category",
                 element: <Department />
+            },
+            {
+                path: "/reviews/:product",
+                element: <Review />
             }
         ]
     }

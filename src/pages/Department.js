@@ -21,7 +21,7 @@ const Department = () => {
                 setProducts(productsData);
             })
             .finally(() => {
-                document.title = category ? `Hero´s Shop - ${capitalizeSentence(category.replace("_", " "))}` : "Hero´s Shop";
+                document.title = category ? `${capitalizeSentence(category.replace("_", " "))} | Hero´s Shop` : "Hero´s Shop";
                 updateTitle(category ? capitalizeSentence(category.replace("_", " ")) : "Produtos em Destaque");
             });
     };
@@ -29,7 +29,7 @@ const Department = () => {
     return (
         <div className="products-container">
             {products.map((product) => (
-                <Product key={product.id} image={product.photo || "https://placehold.jp/24/ff2d00/ffffff/150x150.png?text=no+photo"} name={product.name} description={product.description} price={product.price} />
+                <Product key={product.id} image={product.photo || "https://placehold.jp/24/ff2d00/ffffff/150x150.png?text=no+photo"} name={product.name} description={product.description} price={product.price} id={product.id} />
             ))}
         </div>
     );
