@@ -11,8 +11,10 @@ class Product {
 }
 
 class Review {
-    constructor({ id, comment, date, order, stars }) {
+    constructor({ id, userPhoto, userName, comment, date, order, stars }) {
         this.id = id;
+        this.userPhoto = userPhoto;
+        this.userName = userName;
         this.comment = comment;
         this.date = date;
         this.order = order;
@@ -85,9 +87,9 @@ function loadSpecificProduct(productId) {
 }
 
 function loadReviews(productId) {
-    let reviewsList = [];
+    const reviewsList = [];
 
-    fetch(`${path}review.json`, {
+    return fetch(`${path}review.json`, {
         method: "GET",
     })
         .then((response) => {
@@ -97,20 +99,52 @@ function loadReviews(productId) {
             return response.json();
         })
         .then((reviews) => {
+            const promises = [];
+
             for (let key in reviews) {
-                reviewsList.push(
-                    new Review({
-                        id: key,
-                        comment: reviews[key].comment,
-                        date: reviews[key].date,
-                        order: reviews[key].order,
-                        stars: reviews[key].stars,
+                promises.push(
+                    fetch(`${path}order/${reviews[key].order}.json`, {
+                        method: "GET",
                     })
+                        .then((response) => {
+                            if (!response.ok) {
+                                throw new Error("Network answer was not ok.");
+                            }
+                            return response.json();
+                        })
+                        .then((order) => {
+                            fetch(`${path}user/${order.user}.json`, {
+                                method: "GET",
+                            })
+                            .then((response) => {
+                                if (!response.ok) {
+                                    throw new Error("Network answer was not ok.");
+                                }
+                                return response.json();
+                            })
+                            .then((user) => {
+                                if (order.product === productId) {
+                                    const review = new Review({
+                                        id: key,
+                                        userPhoto: user.photo,
+                                        userName: user.name,
+                                        comment: reviews[key].comment,
+                                        date: reviews[key].date,
+                                        order: reviews[key].order,
+                                        stars: reviews[key].stars,
+                                    });
+    
+                                    reviewsList.push(review);
+                                }
+                            })
+                        })
                 );
             }
 
-            return reviewsList;
+            return Promise.all(promises).then(() => reviewsList);
         });
 }
 
-export { loadProducts, loadSpecificProduct, loadReviews };
+function getReviewsAverage(reviews) {}
+
+export { loadProducts, loadSpecificProduct, loadReviews, getReviewsAverage };
