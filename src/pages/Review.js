@@ -11,7 +11,7 @@ export default function Review() {
     const [currentProduct, setCurrentProduct] = useState();
     const [reviews, setReviews] = useState();
 
-    const loadData = () => {
+    const loadData = async () => {
         loadSpecificProduct(product).then((specificProduct) => {
             setCurrentProduct(specificProduct);
             document.title = `${specificProduct.name} | Hero´s Shop`;
@@ -43,7 +43,7 @@ export default function Review() {
             )}
             <div className="review-comments">
                 {(reviews && reviews.length != 0) ? 
-                <div className="review-comments-inner" style={{ paddingBottom: `40px` }}>
+                <div className="review-comments-inner" style={{ paddingBottom: `15px` }}>
                     <p className="review-comments-quantity">{reviews.length >= 2 ? `Há ${reviews.length} avaliações para este produto.` : `Há 1 avaliação para este produto.`}</p>
                     {reviews.map((review) => (
                     <Comment key={review.id} photo={review.userPhoto || "https://placehold.jp/12/ff2d00/ffffff/75x75.png?text=no+photo"} username={review.userName} stars={review.stars} comment={review.comment} />
