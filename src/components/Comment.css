@@ -1,0 +1,20 @@
+.review-comment, .review-comment-rating {
+    display: flex;
+    flex-direction: row;
+}
+
+.review-comment {
+    border-radius: 10px;
+    background-color: rgb(0, 0, 0, 0.75);
+}
+
+.review-comment-user-photo {
+    max-width: 60px;
+    max-height: 60px;
+    border-radius: 50%;
+}
+
+.review-comment-content {
+    display: flex;
+    flex-direction: column;
+}
