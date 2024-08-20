@@ -48,7 +48,7 @@ function loadProducts(category) {
                         category: products[key].category,
                         origin_address: products[key].origin_address,
                     });
-
+                    
                     productsList.push(product);
                 }
             }
@@ -133,7 +133,7 @@ function loadReviews(productId) {
                                         order: reviews[key].order,
                                         stars: reviews[key].stars,
                                     });
-    
+                                    
                                     reviewsList.push(review);
                                 }
                             })

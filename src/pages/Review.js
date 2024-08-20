@@ -9,7 +9,7 @@ export default function Review() {
     const { updateTitle } = useOutletContext();
 
     const [currentProduct, setCurrentProduct] = useState();
-    const [reviews, setReviews] = useState([]);
+    const [reviews, setReviews] = useState();
 
     const loadData = () => {
         loadSpecificProduct(product).then((specificProduct) => {
@@ -42,9 +42,13 @@ export default function Review() {
                 </div>
             )}
             <div className="review-comments">
-                {reviews && (reviews.map((review) => (
-                    <Comment photo={review.userPhoto} username={review.userName} stars={review.stars} comment={review.comment} />
-                )))}
+                {(reviews && reviews.length != 0) ? 
+                <div className="review-comments-inner" style={{ paddingBottom: `40px` }}>
+                    <p className="review-comments-quantity">{reviews.length >= 2 ? `Há ${reviews.length} avaliações para este produto.` : `Há 1 avaliação para este produto.`}</p>
+                    {reviews.map((review) => (
+                    <Comment key={review.id} photo={review.userPhoto || "https://placehold.jp/12/ff2d00/ffffff/75x75.png?text=no+photo"} username={review.userName} stars={review.stars} comment={review.comment} />
+                ))}</div> : 
+                <div className="review-comments-inner" style={{ paddingBottom: `0` }}><p className="review-comments-quantity">Não há avaliações para este produto.</p></div>}
             </div>
         </div>
     );

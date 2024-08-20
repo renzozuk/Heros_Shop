@@ -4,17 +4,37 @@
 }
 
 .review-comment {
-    border-radius: 10px;
+    min-height: 50px;
+    margin: 10px 50px;
+    padding: 10px;
+    border-radius: 25px;
     background-color: rgb(0, 0, 0, 0.75);
 }
 
+.outer-review-comment-user-photo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
 .review-comment-user-photo {
-    max-width: 60px;
-    max-height: 60px;
+    margin: auto 20px auto 10px;
+    max-width: 75px;
+    max-height: 75px;
     border-radius: 50%;
 }
 
 .review-comment-content {
     display: flex;
     flex-direction: column;
+}
+
+.review-comment-username, .review-comment-text {
+    margin: 10px 25px 10px 0;
+    text-align: justify;
+    color: #ffffff;
+}
+
+.review-comment-username {
+    font-size: 120%;
 }
