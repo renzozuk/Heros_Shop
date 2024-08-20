@@ -1,0 +1,87 @@
+@media (orientation: landscape) {
+    .review-container {
+        margin: 0 20%;
+    }
+}
+
+@media (orientation: portrait) {
+    .review-container {
+        margin: 0 10%;
+    }
+}
+
+.review-container {
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.review-product {
+    padding: 40px;
+    border-radius: 40px 40px 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffffff;
+}
+
+.review-product-image {
+    margin: 0 auto;
+    max-width: 250px;
+    max-height: 250px;
+}
+
+.review-product-name, .review-product-price {
+    text-align: center;
+}
+
+.review-product-name {
+    font-size: 175%;
+    font-weight: 600;
+}
+
+.review-product-description {
+    margin: 0;
+    font-size: 105%;
+    text-align: justify;
+    color: #444;
+}
+
+.review-product-price {
+    font-size: 150%;
+}
+
+.review-product-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.review-product-button {
+    margin: auto 1%;
+    background-color: #ffc107;
+    color: #222;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.review-product-button:hover {
+    background-color: #ffca28;
+}
+
+.review-comments {
+    min-height: 40px;
+    border-radius: 0 0 40px 40px;
+    background-color: rgb(0, 0, 0, 0.5);
+}
+
+.review-comments-quantity {
+    margin: 20px auto;
+    font-size: 20px;
+    text-align: center;
+    color: #ffffff;
+}

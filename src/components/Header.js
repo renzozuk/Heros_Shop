@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AccountButton from "./AccountButton";
+import Banner from './Banner';
 import "./Header.css";
 
 export default function Header() {
@@ -18,7 +19,7 @@ export default function Header() {
 
     return (
         <div className="header">
-            <img className="banner-image" src={screenWidth > 1250 ? "./banner.png" : "./banner_portrait.png"}></img>
+            <Banner />
             <div className="account-buttons">
                 <AccountButton side={"left"} />
                 <AccountButton side={"right"} />

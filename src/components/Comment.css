@@ -1,0 +1,46 @@
+.review-comment, .review-comment-rating {
+    display: flex;
+    flex-direction: row;
+}
+
+.review-comment {
+    min-height: 50px;
+    margin: 25px 50px;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: rgb(0, 0, 0, 0.75);
+}
+
+.outer-review-comment-user-photo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.review-comment-user-photo {
+    margin: auto 20px auto 10px;
+    max-width: 75px;
+    max-height: 75px;
+    border-radius: 50%;
+}
+
+.review-comment-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.review-comment-username, .review-comment-text {
+    margin: 10px 25px 10px 0;
+    text-align: justify;
+    color: #ffffff;
+}
+
+.review-comment-username {
+    font-size: 120%;
+}
+
+.rating-star {
+    width: 30px;
+    height: 30px;
+    margin: 0 5px 0 0;
+}
