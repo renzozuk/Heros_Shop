@@ -86,7 +86,7 @@ function loadSpecificProduct(productId) {
         });
 }
 
-function loadReviews(productId) {
+async function loadReviews(productId) {
     const reviewsList = [];
 
     return fetch(`${path}review.json`, {
@@ -112,8 +112,8 @@ function loadReviews(productId) {
                             }
                             return response.json();
                         })
-                        .then((order) => {
-                            fetch(`${path}user/${order.user}.json`, {
+                        .then(async (order) => {
+                            await fetch(`${path}user/${order.user}.json`, {
                                 method: "GET",
                             })
                             .then((response) => {
