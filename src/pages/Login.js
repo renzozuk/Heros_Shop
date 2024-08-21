@@ -15,6 +15,7 @@ function LoginForm() {
         signInWithEmailAndPassword(auth, email, password)
             .then(() => {
                 localStorage.setItem("currentUser", auth.currentUser.uid);
+                localStorage.setItem("users.name",auth.currentUser.email);
                 navigate(localStorage.getItem("lastPage") || "/");
             })
             .catch((error) => {

@@ -58,7 +58,7 @@ export default function AccountButton(props) {
                     </div> 
                     : 
                     <div className="inner-account-button">
-                        <p className="greeting-text">{`Olá, ${localStorage.getItem("currentUser")}!`}</p>
+                        <p className="greeting-text">{`Olá, ${localStorage.getItem("users.name")}!`}</p>
                     </div> 
                 }
             </div> 
