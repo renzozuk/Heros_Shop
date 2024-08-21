@@ -6,7 +6,7 @@ import App from "./App";
 import Department from "./pages/Department";
 import ErrorPage from "./pages/ErrorPage";
 import Review from "./pages/Review";
-import SignupForm from "./pages/SignupForm"; // Importa o componente de registro
+import Signup from "./pages/Signup";
 import reportWebVitals from "./reportWebVitals";
 
 const router = createBrowserRouter([
@@ -29,7 +29,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/signup",
-                element: <SignupForm /> // Adiciona a rota para o componente de registro
+                element: <Signup />
             }
         ]
     }
