@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+
+import React, { useState,useEffect } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { useOutletContext,useNavigate } from "react-router-dom";
 import "./Login.css";
 
 function LoginForm() {
@@ -8,6 +9,13 @@ function LoginForm() {
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const auth = getAuth();
+
+    const { updateTitle } = useOutletContext();
+
+    useEffect(() => {
+        document.title = `Login | Hero´s Shop`;
+        updateTitle(`Login`);
+    }, []);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,7 +34,7 @@ function LoginForm() {
 
     return (
         <section className="main-content">
-            <h2>Login</h2>
+    
             <div className="container small_container">
                 <form onSubmit={handleSubmit}>
                     <div className="input-box input-box-small">
