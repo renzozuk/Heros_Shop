@@ -18,6 +18,8 @@ export default function AccountButton(props) {
         if (!localStorage.getItem("currentUser")) {
             if (props.side === "left") {
                 navigate("/signup"); // Redireciona para a página de registro
+            }else{
+                navigate("/login");
             }
         }
     }

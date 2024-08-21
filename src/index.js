@@ -8,6 +8,7 @@ import ErrorPage from "./pages/ErrorPage";
 import Review from "./pages/Review";
 import Signup from "./pages/Signup";
 import reportWebVitals from "./reportWebVitals";
+import LoginForm from "./pages/Login";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
             {
                 path: "/signup",
                 element: <Signup />
+            },
+            {
+                path: "/login",
+                element: <LoginForm/>
             }
         ]
     }
