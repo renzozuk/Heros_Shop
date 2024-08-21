@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 import "./AccountButton.css";
 
 export default function AccountButton(props) {
     const [isHovered, setIsHovered] = useState(false);
     const navigate = useNavigate();
+    const auth = getAuth();
 
     const handleMouseOver = () => {
         setIsHovered(true);
@@ -15,11 +17,26 @@ export default function AccountButton(props) {
     }
 
     const handleClick = () => {
-        if (!localStorage.getItem("currentUser")) {
+        const currentUser = localStorage.getItem("currentUser");
+
+        if (!currentUser) {
+            // Usuário não está logado, redireciona para página de login ou registro
             if (props.side === "left") {
                 navigate("/signup"); // Redireciona para a página de registro
-            }else{
-                navigate("/login");
+            } else {
+                navigate("/login"); // Redireciona para a página de login
+            }
+        } else {
+            // Usuário está logado, e se o botão da direita for clicado, faz logout
+            if (props.side === "right") {
+                signOut(auth)
+                    .then(() => {
+                        localStorage.removeItem("currentUser"); // Remove o usuário atual do localStorage
+                        navigate("/"); // Redireciona para a página inicial após logout
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao sair da conta: ", error);
+                    });
             }
         }
     }

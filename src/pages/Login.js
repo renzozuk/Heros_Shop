@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import "./Signup.css"; // Estilo customizado para o formulário
+import "./Login.css";
 
 function LoginForm() {
     const [email, setEmail] = useState("");
