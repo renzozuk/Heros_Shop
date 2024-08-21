@@ -24,8 +24,6 @@ function LoginForm() {
         };
     }, []);
 
-    const { updateTitle } = useOutletContext();
-
     useEffect(() => {
         document.title = `Login | Hero´s Shop`;
         updateTitle(`Login`);
