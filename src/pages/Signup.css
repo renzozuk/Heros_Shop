@@ -1,25 +1,37 @@
-@media (orientation: portrait) {
+@media (max-width: 1200px) {
     .outer-signup-form {
-        width: 60%;
+        width: calc(60% - 100px);
+        padding: 60px 50px 30px;
     }
 }
 
-@media (orientation: landscape) {
+@media (min-width: 1200px) {
     .outer-signup-form {
-        width: 50%;
+        width: calc(50% - 200px);
+        padding: 60px 100px 30px;
     }
 }
 
 .outer-signup-form {
     margin: 0 auto 50px;
-    padding: 60px 100px 30px;
     border-radius: 30px;
     background-color: rgb(0, 0, 0, 0.5);
 }
 
-.advice {
+.outer-advice {
+    width: 300px;
+    height: 40px;
     margin: 0 auto 10px;
-    text-align: justify;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: rgb(0, 0, 0, 0.75);
+}
+
+.advice {
+    margin: 0 auto;
+    text-align: center;
     font-weight: 300;
     color: #ffffff;
 }

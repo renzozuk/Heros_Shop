@@ -19,6 +19,9 @@ const auth = getAuth(app);
 const database = getDatabase(app);
 
 export default function Signup() {
+    const navigate = useNavigate();
+    const { updateTitle } = useOutletContext();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
@@ -33,9 +36,6 @@ export default function Signup() {
     const [state, setState] = useState("");
     /* const [country, setCountry] = useState(""); */
     const [zipCode, setZipCode] = useState("");
-
-    const navigate = useNavigate();
-    const { updateTitle } = useOutletContext();
 
     useEffect(() => {
         document.title = `Criar Conta | Hero´s Shop`;
@@ -108,7 +108,9 @@ export default function Signup() {
 
     return (
         <div className="outer-signup-form">
-            <p className="advice">Os campos com<Asterisk /> são obrigatórios.</p>
+            <div className="outer-advice">
+                <p className="advice">Os campos com<Asterisk /> são obrigatórios.</p>
+            </div>
             <form className="signup-form" onSubmit={handleSubmit}>
                 <div className="input-box">
                     <label htmlFor="name">Nome Completo<Asterisk /></label>
@@ -139,16 +141,16 @@ export default function Signup() {
                     <input type="text" id="foto" name="foto" value={foto} onChange={(e) => setFoto(e.target.value)} placeholder="https://example.com/photo.jpg" />
                 </div>
                 <div className="input-box">
-                    <label htmlFor="building_name">Complemento<Asterisk /></label>
-                    <input type="text" id="building_name" name="building_name" value={buildingName} onChange={(e) => setBuildingName(e.target.value)} placeholder="Edifício Rui Barbosa" />
-                </div>
-                <div className="input-box">
                     <label htmlFor="street">Rua<Asterisk /></label>
                     <input type="text" id="street" name="street" value={street} onChange={(e) => setStreet(e.target.value)} placeholder="Praça Rui Barbosa" required />
                 </div>
                 <div className="input-box">
                     <label htmlFor="house_number">Número<Asterisk /></label>
                     <input type="text" id="house_number" name="house_number" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} placeholder="117" required />
+                </div>
+                <div className="input-box">
+                    <label htmlFor="building_name">Complemento</label>
+                    <input type="text" id="building_name" name="building_name" value={buildingName} onChange={(e) => setBuildingName(e.target.value)} placeholder="Edifício Rui Barbosa" />
                 </div>
                 <div className="input-box">
                     <label htmlFor="neighborhood">Bairro<Asterisk /></label>
