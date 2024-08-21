@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getDatabase, ref, set, push } from "firebase/database";
+import { useNavigate } from "react-router-dom";
 import "./Singnup.css";
+
 const firebaseConfig = {
     apiKey: "AIzaSyAxfJW-BXx1-p_p2DBoiQYa8tGea2Fnfhk",
     authDomain: "heros-shop-i.firebaseapp.com",
@@ -33,11 +35,17 @@ function SignupForm() {
     const [country, setCountry] = useState("");
     const [zipCode, setZipCode] = useState("");
 
+    const navigate = useNavigate();
+
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        console.log("Form submit initiated"); // Log para verificar se o handleSubmit é chamado
+
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
+                console.log("User created:", userCredential.user); // Verificar se o usuário foi criado
+
                 const user = userCredential.user;
                 const uid = user.uid;
 
@@ -57,6 +65,8 @@ function SignupForm() {
 
                 set(newAddressRef, addressData)
                     .then(() => {
+                        console.log("Address saved:", newAddressRef.key); // Verificar se o endereço foi salvo
+
                         const userData = {
                             cpf: cpf,
                             name: name,
@@ -69,7 +79,10 @@ function SignupForm() {
 
                         set(userRef, userData)
                             .then(() => {
-                                window.location.href = `../../${localStorage.getItem("lastPage")}`;
+                                console.log("User data saved:", userData); // Verificar se os dados do usuário foram salvos
+
+                                const lastPage = localStorage.getItem("lastPage") || "/";
+                                navigate(lastPage);
                             })
                             .catch((error) => {
                                 console.error("Erro ao enviar informações do usuário para o Realtime Database: ", error);
