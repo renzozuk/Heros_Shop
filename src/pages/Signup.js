@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getDatabase, ref, set, push } from "firebase/database";
@@ -34,6 +34,7 @@ export default function Signup() {
     /* const [country, setCountry] = useState(""); */
     const [zipCode, setZipCode] = useState("");
 
+    const navigate = useNavigate();
     const { updateTitle } = useOutletContext();
 
     useEffect(() => {
@@ -77,7 +78,8 @@ export default function Signup() {
 
                         set(userRef, userData)
                             .then(() => {
-                                window.location.href = `../../${localStorage.getItem("lastPage")}`;
+                                const lastPage = localStorage.getItem("lastPage") || "/";
+                                navigate(lastPage);
                             })
                             .catch((error) => {
                                 console.error("Erro ao enviar informações do usuário para o Realtime Database: ", error);
