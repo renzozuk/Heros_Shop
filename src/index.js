@@ -10,6 +10,7 @@ import Payment from "./pages/Payment";
 import Review from "./pages/Review";
 import Signup from "./pages/Signup";
 import reportWebVitals from "./reportWebVitals";
+import AccountSettings from "./pages/AccountSettings";
 
 const router = createBrowserRouter([
     {
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
             {
                 path: "/login",
                 element: <Login />
+            },
+            {
+                path: "/account-settings",
+                element: <AccountSettings />
             }
         ]
     }
