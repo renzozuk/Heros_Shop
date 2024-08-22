@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Payment from "./pages/Payment";
 import Review from "./pages/Review";
 import Signup from "./pages/Signup";
+import Successful from "./pages/Successful";
 import reportWebVitals from "./reportWebVitals";
 
 const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: "/account-settings",
                 element: <AccountSettings />
+            },
+            {
+                path: "/successful",
+                element: <Successful />
             }
         ]
     }
