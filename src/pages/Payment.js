@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext, useParams, useNavigate } from "react-router-dom";
 import { getAddressFromProduct, loadSpecificProduct } from "../util/Data";
 import { confirmOrder, isCardNumberValid } from "../util/PaymentHelper";
 import "./Payment.css";
 
 export default function Payment() {
+    const navigate = useNavigate();
     const { product } = useParams();
     const { updateTitle } = useOutletContext();
 
@@ -36,6 +37,7 @@ export default function Payment() {
 
         if(isCardNumberValid(cardNumber)){
             confirmOrder(product, localStorage.getItem("currentUser"));
+            navigate("/successful");
         }else{
             window.alert("Número de cartão inválido.");
         }

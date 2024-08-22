@@ -33,6 +33,7 @@ function Orders(){
                 setProducts(productsData);
             })
             .finally(() => {
+                document.title = `Meus Pedidos | Hero´s Shop`;
                 updateTitle("Meus Pedidos");
             });
     };    

@@ -31,6 +31,7 @@ export default function AccountButton(props) {
                     .then(() => {
                         localStorage.removeItem("currentUser");
                         navigate("/");
+                        window.location.reload();
                     })
                     .catch((error) => {
                         console.error("Erro ao sair da conta: ", error);
