@@ -11,6 +11,7 @@ import Payment from "./pages/Payment";
 import Review from "./pages/Review";
 import Signup from "./pages/Signup";
 import reportWebVitals from "./reportWebVitals";
+import Orders from "./pages/Orders";
 
 const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
             {
                 path: "/account-settings",
                 element: <AccountSettings />
+            },
+            {
+                path: "/orders",
+                element: <Orders />
             }
         ]
     }
