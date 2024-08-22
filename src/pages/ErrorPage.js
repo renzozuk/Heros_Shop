@@ -1,7 +1,7 @@
 const ErrorPage = () => {
     return (
         <div>
-            <h1>An error was found.</h1>
+            <h1>Um erro foi encontrado.</h1>
         </div>
     );
 }

@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
+import AccountSettings from "./pages/AccountSettings";
 import App from "./App";
 import Department from "./pages/Department";
 import ErrorPage from "./pages/ErrorPage";
@@ -10,7 +11,6 @@ import Payment from "./pages/Payment";
 import Review from "./pages/Review";
 import Signup from "./pages/Signup";
 import reportWebVitals from "./reportWebVitals";
-import AccountSettings from "./pages/AccountSettings";
 
 const router = createBrowserRouter([
     {

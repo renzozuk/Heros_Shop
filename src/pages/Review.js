@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useOutletContext } from "react-router-dom";
+import { useOutletContext, useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import { loadSpecificProduct, loadReviews } from "../util/Data";
 import "./Review.css";

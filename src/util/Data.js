@@ -1,3 +1,15 @@
+class Order {
+    constructor({ id, date_of_delivery, date_of_purchase, destination_address, payment_method, product, user }) {
+        this.id = id;
+        this.date_of_delivery = date_of_delivery;
+        this.date_of_purchase = date_of_purchase;
+        this.destination_address = destination_address;
+        this.payment_method = payment_method;
+        this.product = product;
+        this.user = user;
+    }
+}
+
 class Product {
     constructor({ id, name, description, price, photo, category, origin_address }) {
         this.id = id;
@@ -48,7 +60,7 @@ function loadProducts(category) {
                         category: products[key].category,
                         origin_address: products[key].origin_address,
                     });
-                    
+
                     productsList.push(product);
                 }
             }
@@ -86,6 +98,19 @@ function loadSpecificProduct(productId) {
         });
 }
 
+function getAddressFromProduct(productId) {
+    fetch(`${path}product.json`)
+        .then((response) => response.json())
+        .then((products) => {
+            let a = fetch(`${path}address.json`)
+                .then((response) => response.json())
+                .then((addresses) => {
+                    console.log(products[productId]);
+                    /* return `Origem do produto: ${addresses[products[localStorage.getItem("currentProduct")].origin_address].city} - ${addresses[products[localStorage.getItem("currentProduct")].origin_address].state}`; */
+                });
+        });
+}
+
 async function loadReviews(productId) {
     const reviewsList = [];
 
@@ -116,27 +141,27 @@ async function loadReviews(productId) {
                             await fetch(`${path}user/${order.user}.json`, {
                                 method: "GET",
                             })
-                            .then((response) => {
-                                if (!response.ok) {
-                                    throw new Error("Network answer was not ok.");
-                                }
-                                return response.json();
-                            })
-                            .then((user) => {
-                                if (order.product === productId) {
-                                    const review = new Review({
-                                        id: key,
-                                        userPhoto: user.photo,
-                                        userName: user.name,
-                                        comment: reviews[key].comment,
-                                        date: reviews[key].date,
-                                        order: reviews[key].order,
-                                        stars: reviews[key].stars,
-                                    });
-                                    
-                                    reviewsList.push(review);
-                                }
-                            })
+                                .then((response) => {
+                                    if (!response.ok) {
+                                        throw new Error("Network answer was not ok.");
+                                    }
+                                    return response.json();
+                                })
+                                .then((user) => {
+                                    if (order.product === productId) {
+                                        const review = new Review({
+                                            id: key,
+                                            userPhoto: user.photo,
+                                            userName: user.name,
+                                            comment: reviews[key].comment,
+                                            date: reviews[key].date,
+                                            order: reviews[key].order,
+                                            stars: reviews[key].stars,
+                                        });
+
+                                        reviewsList.push(review);
+                                    }
+                                });
                         })
                 );
             }
@@ -145,6 +170,20 @@ async function loadReviews(productId) {
         });
 }
 
-function getReviewsAverage(reviews) {}
+/* function getReviewsAverage(reviews) {} */
 
-export { loadProducts, loadSpecificProduct, loadReviews, getReviewsAverage };
+function addOrder(orderData) {
+    return fetch(path + "order.json", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error("Resposta de rede não foi ok");
+        }
+    });
+}
+
+export { loadProducts, loadSpecificProduct, getAddressFromProduct, loadReviews,/*  getReviewsAverage, */ addOrder };
