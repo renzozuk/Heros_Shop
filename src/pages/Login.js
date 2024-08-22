@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import "./Login.css";
+import "./SignupLogin.css";
 
-function LoginForm() {
+export default function Login() {
     const navigate = useNavigate();
     const { updateTitle } = useOutletContext();
     const auth = getAuth();
@@ -22,12 +23,7 @@ function LoginForm() {
         return () => {
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
-
-    useEffect(() => {
-        document.title = `Login | Hero´s Shop`;
-        updateTitle(`Login`);
-    }, []);
+    });
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -56,13 +52,9 @@ function LoginForm() {
                     <input type="password" id="password" name="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <div className="outer-submit-button">
-                    <button className="submit-button" type="submit">
-                        Entrar
-                    </button>
+                    <button className="submit-button" type="submit">Entrar</button>
                 </div>
             </form>
         </div>
     );
 }
-
-export default LoginForm;

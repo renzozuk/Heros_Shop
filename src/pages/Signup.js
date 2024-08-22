@@ -4,6 +4,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getDatabase, ref, set, push } from "firebase/database";
 import "./Signup.css";
+import "./SignupLogin.css";
+
 const firebaseConfig = {
     apiKey: "AIzaSyAxfJW-BXx1-p_p2DBoiQYa8tGea2Fnfhk",
     authDomain: "heros-shop-i.firebaseapp.com",
@@ -40,7 +42,7 @@ export default function Signup() {
     useEffect(() => {
         document.title = `Criar Conta | Hero´s Shop`;
         updateTitle(`Criar Conta`);
-    }, []);
+    });
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -114,11 +116,11 @@ export default function Signup() {
             <form className="signup-form" onSubmit={handleSubmit}>
                 <div className="input-box">
                     <label htmlFor="name">Nome Completo<Asterisk /></label>
-                    <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Fulano de Tal" required />
+                    <input type="text" id="name" name="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="Maria da Silva" required />
                 </div>
                 <div className="input-box">
                     <label htmlFor="email">Email<Asterisk /></label>
-                    <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="fulano@email.com" required />
+                    <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="maria.silva@email.com" required />
                 </div>
                 <div className="input-box">
                     <label htmlFor="password">Senha<Asterisk /></label>
@@ -134,7 +136,7 @@ export default function Signup() {
                 </div>
                 <div className="input-box">
                     <label htmlFor="telefone">Telefone<Asterisk /></label>
-                    <input type="text" id="telefone" name="telefone" value={telefone} onChange={(e) => setTelefone(e.target.value)} placeholder="+55 (**) *****-****" required />
+                    <input type="text" id="telefone" name="telefone" value={telefone} onChange={(e) => setTelefone(e.target.value)} placeholder="+55(**)*****-****" required />
                 </div>
                 <div className="input-box">
                     <label htmlFor="foto">Link da foto</label>
@@ -142,27 +144,27 @@ export default function Signup() {
                 </div>
                 <div className="input-box">
                     <label htmlFor="street">Rua<Asterisk /></label>
-                    <input type="text" id="street" name="street" value={street} onChange={(e) => setStreet(e.target.value)} placeholder="Praça Rui Barbosa" required />
+                    <input type="text" id="street" name="street" value={street} onChange={(e) => setStreet(e.target.value)} placeholder="Avenida Paulista" required />
                 </div>
                 <div className="input-box">
                     <label htmlFor="house_number">Número<Asterisk /></label>
-                    <input type="text" id="house_number" name="house_number" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} placeholder="117" required />
+                    <input type="text" id="house_number" name="house_number" value={houseNumber} onChange={(e) => setHouseNumber(e.target.value)} placeholder="100" required />
                 </div>
                 <div className="input-box">
                     <label htmlFor="building_name">Complemento</label>
-                    <input type="text" id="building_name" name="building_name" value={buildingName} onChange={(e) => setBuildingName(e.target.value)} placeholder="Edifício Rui Barbosa" />
+                    <input type="text" id="building_name" name="building_name" value={buildingName} onChange={(e) => setBuildingName(e.target.value)} placeholder="" />
                 </div>
                 <div className="input-box">
                     <label htmlFor="neighborhood">Bairro<Asterisk /></label>
-                    <input type="text" id="neighborhood" name="neighborhood" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)} placeholder="Centro" required />
+                    <input type="text" id="neighborhood" name="neighborhood" value={neighborhood} onChange={(e) => setNeighborhood(e.target.value)} placeholder="" required />
                 </div>
                 <div className="input-box">
                     <label htmlFor="city">Cidade<Asterisk /></label>
-                    <input type="text" id="city" name="city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="Petrópolis" required />
+                    <input type="text" id="city" name="city" value={city} onChange={(e) => setCity(e.target.value)} placeholder="São Paulo" required />
                 </div>
                 <div className="input-box">
                     <label htmlFor="state">Estado<Asterisk /></label>
-                    <input type="text" id="state" name="state" value={state} onChange={(e) => setState(e.target.value)} placeholder="RJ" required />
+                    <input type="text" id="state" name="state" value={state} onChange={(e) => setState(e.target.value)} placeholder="SP" required />
                 </div>
                 {/* <div className="input-box">
                     <label htmlFor="country">País</label>

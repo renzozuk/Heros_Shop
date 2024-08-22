@@ -9,7 +9,7 @@ export default function Product(props) {
             <p className="product-description">{props.description}</p>
             <p className="product-price">{props.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
             <div className="product-buttons">
-                <button className="product-button product-buy-button"><Link>Comprar</Link></button>
+                <button className="product-button product-buy-button"><Link to={`/payment/${props.id}`}>Comprar</Link></button>
                 <button className="product-button product-detail-button"><Link to={`/reviews/${props.id}`}>Ver Detalhes</Link></button>
             </div>
         </div>

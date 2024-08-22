@@ -5,10 +5,11 @@ import "./index.css";
 import App from "./App";
 import Department from "./pages/Department";
 import ErrorPage from "./pages/ErrorPage";
+import Login from "./pages/Login";
+import Payment from "./pages/Payment";
 import Review from "./pages/Review";
 import Signup from "./pages/Signup";
 import reportWebVitals from "./reportWebVitals";
-import LoginForm from "./pages/Login";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
                 element: <Department />
             },
             {
+                path: "/payment/:product",
+                element: <Payment />
+            },
+            {
                 path: "/reviews/:product",
                 element: <Review />
             },
@@ -34,7 +39,7 @@ const router = createBrowserRouter([
             },
             {
                 path: "/login",
-                element: <LoginForm/>
+                element: <Login />
             }
         ]
     }
