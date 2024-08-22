@@ -31,7 +31,7 @@ export default function Header() {
                     <li className="header-navbar-item"><Link className="header-navbar-link" to="/departments/cosplay">Cosplay</Link></li>
                     <li className="header-navbar-item"><Link className="header-navbar-link" to="/departments/diversos">Diversos</Link></li>
                     {localStorage.getItem("currentUser") && <li className="header-navbar-item"><Link className="header-navbar-link" to="/account-settings"><i class="fas fa-user"></i><p className="header-navbar-link-text">Meu Perfil</p></Link></li>}
-                    {localStorage.getItem("currentUser") && <li className="header-navbar-item"><Link className="header-navbar-link" to="#"><i class="fas fa-user"></i><p className="header-navbar-link-text">Meus Pedidos</p></Link></li>}
+                    {localStorage.getItem("currentUser") && <li className="header-navbar-item"><Link className="header-navbar-link" to="/orders"><i class="fas fa-user"></i><p className="header-navbar-link-text">Meus Pedidos</p></Link></li>}
                 </ul>
                 <ul className="header-navbar-section">
                     <li className="header-navbar-item">Contato: +55 84 99999-9999 | contato@heroshop.com</li>
