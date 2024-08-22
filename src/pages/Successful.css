@@ -1,1 +1,14 @@
-/* @import '~bootstrap/dist/css/bootstrap.min.css'; */
+.outer-successful-message {
+    width: fit-content;
+    margin: 0 auto;
+    padding: 25px;
+    border-radius: 25px;
+    background-color: rgb(0, 0, 0, 0.5);
+}
+
+.successful-message {
+    margin: 10px 0;
+    font-size: 200%;
+    text-align: center;
+    color: #ffffff;
+}

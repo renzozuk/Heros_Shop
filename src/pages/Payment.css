@@ -87,6 +87,20 @@
     .payment-option-button {
         margin: 0 auto 20px;
     }
+
+    .payment-option-button {
+        width: 250px;
+        height: 40px;
+        border-radius: 20px;
+        font-size: 100%;
+    }
+
+    .confirmation-button {
+        width: 200px;
+        height: 40px;
+        border-radius: 20px;
+        font-size: 15px;
+    }
 }
 
 @media (min-width: 1250px) {
@@ -97,18 +111,25 @@
     .payment-option-button {
         margin: 0 20px 40px;
     }
+
+    .payment-option-button {
+        width: 450px;
+        height: 80px;
+        border-radius: 40px;
+        font-size: 150%;
+    }
+
+    .confirmation-button {
+        width: 300px;
+        height: 60px;
+        border-radius: 30px;
+        font-size: 25px;
+    }
 }
 
 .payment-options-buttons {
     display: flex;
     justify-content: center;
-}
-
-.payment-option-button {
-    width: 450px;
-    height: 80px;
-    border-radius: 40px;
-    font-size: 150%;
 }
 
 .payment-option-button, .confirmation-button {
@@ -151,14 +172,6 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-}
-
-.confirmation-button {
-    width: 300px;
-    height: 60px;
-    /* margin: 0 auto; */
-    border-radius: 30px;
-    font-size: 25px;
 }
 
 .user-not-logged-advice {
