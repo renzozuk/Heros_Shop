@@ -1,0 +1,7 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
+hibernate:
+  physical_naming_strategy: com.baeldung.hibernate.namingstrategy.CustomPhysicalNamingStrategy
